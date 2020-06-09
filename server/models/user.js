@@ -9,7 +9,7 @@ export const userSchema = new Schema(
     password: String,
 
     weight: Number,
-    sex: String,
+    gender: String,
     height: Number,
     age: Number,
     isPrivate: Boolean,
