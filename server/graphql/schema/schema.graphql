@@ -6,6 +6,9 @@ schema {
 type Query {
   users:[User]
   user(email:String id: String): User
+
+  parties: [Party]
+  party(partyId: String): Party
 }
 
 type Mutation {
@@ -14,7 +17,7 @@ type Mutation {
 
   createParty( name: String ownerId: String ): Boolean
   joinParty(partyId: String): Boolean
-  endParty( id: String ): Boolean
+  endParty( partyId: String ): Boolean
 }
 
 type User {

@@ -5,8 +5,15 @@ const Schema = mongoose.Schema;
 export const partySchema = new Schema(
   {
     name: String,
+    owner: mongoose.Types.ObjectId,
+    isPartyOver: Boolean,
     members: [mongoose.Types.ObjectId],
-    membersShots: [{ userId: mongoose.Types.ObjectId, shots: [{ percent: Number, number: Number }] }]
+    membersShots: [
+      {
+        userId: mongoose.Types.ObjectId,
+        shots: [{ percent: Number, number: Number }]
+      }
+    ]
   },
   { collection: 'parties' }
 );

@@ -93,9 +93,17 @@ export default (req, res, next) => ({
 
       return true
     }
-
     return false
   },
-  endParty: () => true
+  endParty: async ({ partyId }) => {
+    const doc = await Party.findOne({ _id: ObjectId(partyId) })
+    if (doc) {
+      doc.isPartyOver = true
+      await doc.save();
+
+      return true
+    }
+    return false
+  }
 
 });
