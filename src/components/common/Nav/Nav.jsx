@@ -11,47 +11,7 @@ class Nav extends React.Component {
   render() {
     return (
       <>
-        <nav className="nav">
-          <ul className="nav__ul">
-            {this.props.gameData.isLogged ? (
-              <>
-                <li className="nav__li">
-                  <Link className="nav__a" to={`/`}>
-                    Start
-                  </Link>
-                </li>
-                <li className="nav__li">
-                  <Link className="nav__a" to={`/home`}>
-                    Home
-                  </Link>
-                </li>
-                <li className="nav__li">
-                  <Link className="nav__a" to={`/profile`}>
-                    Profile
-                  </Link>
-                </li>
-                <li className="nav__li">
-                  <Link className="nav__a" to={`/login`}>
-                    Log In
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav__li">
-                  <Link className="nav__a" to={`/about`}>
-                    Home
-                  </Link>
-                </li>
-                <li className="nav__li">
-                  <Link className="nav__a" to={`/login`}>
-                    Log In
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </nav>
+        <nav className="nav"></nav>
       </>
     );
   }
