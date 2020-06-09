@@ -1,0 +1,294 @@
+@import "mixins" ,"variables"
+
+@media  ( max-width: 335px )
+    $titleLoginPageFontSize: 32px
+
+    .loginPage__li
+        font-size: 34px
+
+    .loginPage__title
+        +titleLoginPage($titleLoginPageFontSize)
+    .registerPage__title
+        +titleLoginPage($titleLoginPageFontSize)
+        margin-top: 20px
+    .loginPage__ul
+        font-size: 34px
+
+    .nav__a
+        font-size: 24px
+        
+
+
+@media ( min-width: 410px )
+    $sectionLoginPageWidth: 250px
+
+    .startPage__section
+        padding: 30px
+
+    .loginPage__ul
+        font-size: 42px
+    .loginPage__li
+        width: 150px
+    .loginPage__section
+        +sectionLoginPage($sectionLoginPageWidth, $sectionLoginPageMargin)
+    .registerPage__section
+        +sectionLoginPage($sectionLoginPageWidth, $sectionLoginPageMargin)
+    
+    .nav__a
+        font-size: 30px
+
+@media (min-width: 630px)
+    .campaingPage__title
+        font-size: 52px
+    .campaingPage__h2
+        font-size: 32px
+    .campaingPage__nextGame
+        width: 270px
+    .campaingPage__additionalButton
+        +btn(30px,45%,12px)
+    .campaingPage__player
+        margin: 10px 10px
+
+
+    
+@media ( min-width: 730px )
+    $titleLoginPageFontSize: 50px
+
+    $sectionLoginPageWidth: 350px
+    $sectionLoginPageMargin: 20px
+
+    $h2LoginPageFontSize: 40px
+    $h2LoginPageFontMargin: 5px
+
+    $inputLoginPageHeight: 50px
+    $inputLoginPageFontSize: 26px
+
+    $btnLoginPageHeight: 50px
+    $btnLoginPageWidth: 200px
+    $btnLoginPageFontSize: 36px
+
+    .loginPage__ul
+        font-size: 56px
+    .loginPage__li
+        width: 200px
+    .loginPage__p
+        margin-top: 10px
+        font-size: 20px
+    .registerPage__title
+        +titleLoginPage($titleLoginPageFontSize)
+    .registerPage__section
+        +sectionLoginPage($sectionLoginPageWidth, $sectionLoginPageMargin)
+    .registerPage__h2
+        +h2LoginPage($h2LoginPageFontSize, $h2LoginPageFontMargin)
+    .registerPage__input
+        +inputLoginPage($inputLoginPageHeight, $inputLoginPageFontSize, 3px)
+    .registerPage__btn
+        +btn($btnLoginPageHeight, $btnLoginPageWidth, $btnLoginPageFontSize)
+
+    .loginPage__title
+        +titleLoginPage($titleLoginPageFontSize)
+    .loginPage__section
+        +sectionLoginPage($sectionLoginPageWidth, $sectionLoginPageMargin)
+    .loginPage__h2
+        +h2LoginPage($h2LoginPageFontSize, $h2LoginPageFontMargin)
+    .loginPage__input
+        +inputLoginPage($inputLoginPageHeight, $inputLoginPageFontSize, 3px)
+    .loginPage__btn
+        +btn($btnLoginPageHeight, $btnLoginPageWidth, $btnLoginPageFontSize)
+
+    .startPage__section
+        display: flex
+        justify-content: space-evenly
+        align-items: center
+        padding: 0px
+        margin-top: 40px
+    .startPage__section:nth-of-type(even)
+        flex-direction: row-reverse
+    .startPage__img
+        width: 45%
+    .startPage__article
+        width: 45%
+
+    .homePage__h2
+        font-size: 52px
+    .homePage__section
+        padding: 30px
+    .homePage__rectangle
+        flex-basis: 30%
+        height: 230px
+        margin-top: 30px
+    .homePage__p
+        font-size: 18px
+    .homePage__rectangle--transparent
+        display: block
+
+    .nav__ul
+        justify-content: flex-end
+    .nav__li
+        max-width: 120px
+
+    .campaingPage__top
+        display: flex
+        flex-direction: row-reverse
+    .campaingPage__aside
+        width: 40%
+    .campaingPage__player
+        width: 170px
+        height: 200px
+    .campaingPage__main
+        margin-top: 10px
+    .campaingPage__gm
+        width: 200px
+        height: 240px
+
+@media ( min-width: 1024px )
+    $titleLoginPageFontSize: 62px
+
+    $sectionLoginPageWidth: 480px
+
+    $h2LoginPageFontSize: 42px
+
+    $inputLoginPageHeight: 52px
+    $inputLoginPageFontSize: 36px
+
+    $btnLoginPageHeight: 50px
+    $btnLoginPageWidth: 460px
+    $btnLoginPageFontSize: 40px
+
+    .loginPage__ul
+        font-size: 76px
+    .loginPage__li
+        width: 285px
+    .loginPage__p
+        margin-top: 10px
+    .registerPage__title
+        +titleLoginPage($titleLoginPageFontSize)
+    .registerPage__section
+        +sectionLoginPage($sectionLoginPageWidth, $sectionLoginPageMargin)
+    .registerPage__h2
+        +h2LoginPage($h2LoginPageFontSize, $h2LoginPageFontMargin)
+    .registerPage__input
+        +inputLoginPage($inputLoginPageHeight, $inputLoginPageFontSize, 3px)
+    .registerPage__btn
+        +btn($btnLoginPageHeight, $btnLoginPageWidth, $btnLoginPageFontSize)
+
+    .loginPage__title
+        +titleLoginPage($titleLoginPageFontSize)
+    .loginPage__section
+        +sectionLoginPage($sectionLoginPageWidth, $sectionLoginPageMargin)
+    .loginPage__h2
+        +h2LoginPage($h2LoginPageFontSize, $h2LoginPageFontMargin)
+    .loginPage__input
+        +inputLoginPage($inputLoginPageHeight, $inputLoginPageFontSize, 3px)
+    .loginPage__btn
+        +btn($btnLoginPageHeight, $btnLoginPageWidth, $btnLoginPageFontSize)
+
+    .startPage__h2
+        font-size: 40px
+    .startPage__p
+        font-size: 20px
+
+    .homePage__wrap
+        display: flex
+        justify-content: space-between
+        min-height: calc(100vh - 60px)
+        padding: 0 30px
+    .homePage__section
+        width: 47%
+        padding: 0
+    .homePage__line
+        position: sticky
+        left: calc(50% - 1px) //perfectionism
+        top: 8vh
+        width: 2px
+        height: 84vh
+        margin: calc((16vh - 60px)/2) 0 0 0
+    .homePage__h2
+        font-size: 72px
+    .homePage__rectangle
+        height: 200px
+    .homePage__p
+        font-size: 24px
+    .homePage__img
+        margin: 15px auto 0
+
+    .campaingPage__player
+        width: 180px
+        height: 215px
+    .campaingPage__p
+        font-size: 20px
+
+@media ( min-width: 1160px )
+    .homePage__rectangle
+        height: 230px
+    
+
+@media ( min-width: 1366px )
+    $titleLoginPageFontSize: 72px
+
+    $sectionLoginPageWidth: 520px
+
+    $h2LoginPageFontSize: 54px
+
+    $inputLoginPageHeight: 68px
+    $inputLoginPageFontSize: 36px
+
+    $btnLoginPageHeight: 60px
+    $btnLoginPageWidth: 500px
+    $btnLoginPageFontSize: 48px
+
+    .loginPage__ul
+        font-size: 86px
+    .loginPage__li
+        width: 400px
+    .loginPage__p
+        font-size: 24px
+    .registerPage__title
+        +titleLoginPage($titleLoginPageFontSize)
+    .registerPage__section
+        +sectionLoginPage($sectionLoginPageWidth, $sectionLoginPageMargin)
+    .registerPage__h2
+        +h2LoginPage($h2LoginPageFontSize, $h2LoginPageFontMargin)
+    .registerPage__input
+        +inputLoginPage($inputLoginPageHeight, $inputLoginPageFontSize, 3px)
+    .registerPage__btn
+        +btn($btnLoginPageHeight, $btnLoginPageWidth, $btnLoginPageFontSize)
+
+    .loginPage__title
+        +titleLoginPage($titleLoginPageFontSize)
+    .loginPage__section
+        +sectionLoginPage($sectionLoginPageWidth, $sectionLoginPageMargin)
+    .loginPage__h2
+        +h2LoginPage($h2LoginPageFontSize, $h2LoginPageFontMargin)
+    .loginPage__input
+        +inputLoginPage($inputLoginPageHeight, $inputLoginPageFontSize, 3px)
+    .loginPage__btn
+        +btn($btnLoginPageHeight, $btnLoginPageWidth, $btnLoginPageFontSize)
+
+    .startPage__h2
+        font-size: 56px
+    .startPage__p
+        font-size: 26px
+
+    .homePage__rectangle
+        height: 280px
+        flex-basis: 220px
+    .homePage__h2
+        font-size: 90px
+    .homePage__p
+        font-size: 30px
+
+    .campaingPage__title
+        font-size: 60px
+    .campaingPage__h2
+        font-size: 48px
+    .campaingPage__aside
+        width: 30%
+    .campaingPage__about
+        width: 70%
+    .campaingPage__nextGame
+        width: 300px
+    .campaingPage__player
+        margin: 10px 10px
+    .campaingPage__player:last-child
+        margin: 10px 10px 30px
