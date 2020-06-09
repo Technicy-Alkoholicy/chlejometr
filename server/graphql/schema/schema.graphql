@@ -5,6 +5,7 @@ schema {
 
 type Query {
   users:[User]
+  """ specific user, use email or id"""
   user(email:String id: String): User
 
   parties: [Party]
@@ -16,21 +17,26 @@ type Mutation {
   loginUser(email: String password: String): LoginResponse
 
   createParty( name: String ownerId: String ): Boolean
-  joinParty(partyId: String): Boolean
+  joinParty( partyId: String ): Boolean
   endParty( partyId: String ): Boolean
 }
 
+""" user """
 type User {
+  _id: String
   username: String
-  parties:[Party]
   weight: Float
   gender: String
   height: Float
   age: Float
   private: Boolean
+  parties:[Party]
+  friends:[User]
 }
 
+""" party """
 type Party {
+  _id: String
   name: String
   owner: User
   isPartyOver: Boolean
@@ -38,16 +44,19 @@ type Party {
   membersShots: [MembersShots]
 }
 
+""" Shots drinked by specific user """
 type MembersShots {
   user: User
   shots: Shots
 }
 
+""" Drinked shots """
 type Shots {
   percent: Float
   number: Float
 }
 
+""" Response after login or register """
 type LoginResponse {
   status: String
   username: String

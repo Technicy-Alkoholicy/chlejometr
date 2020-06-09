@@ -15,6 +15,7 @@ export const userSchema = new Schema(
     isPrivate: Boolean,
 
     parties: [mongoose.Types.ObjectId],
+    friends: [mongoose.Types.ObjectId]
   },
   { collection: 'users' }
 );

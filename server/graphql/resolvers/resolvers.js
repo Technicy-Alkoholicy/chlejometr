@@ -30,12 +30,13 @@ export default (req, res, next) => ({
           username,
           email,
           password: bcrypt.hashSync(password, 3),
-          parties: [],
           weight: null,
           gender: null,
           height: null,
           age: null,
-          private: null
+          private: null,
+          parties: [],
+          friends: []
         };
 
         User.create(newUser);
@@ -65,7 +66,8 @@ export default (req, res, next) => ({
   },
 
   //party
-
+  parties: async () => Party.find(),
+  party: async ({ partyId }) => Party.findOne({ _id: partyId }),
   createParty: async ({ name }) => {
     const email = req.session.email
     const id = await User.findOne({ email }).then(({ _doc }) => _doc._id)
