@@ -7,8 +7,14 @@ export const userSchema = new Schema(
     username: String,
     email: String,
     password: String,
-    characters: [],
-    campaigns: [],
+
+    weight: Number,
+    sex: String,
+    height: Number,
+    age: Number,
+    isPrivate: Boolean,
+
+    parties: [mongoose.Types.ObjectId],
   },
   { collection: 'users' }
 );
