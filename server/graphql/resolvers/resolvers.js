@@ -1,10 +1,14 @@
 import bcrypt from 'bcrypt';
 import User from '../../models/user.js';
+import Party from '../../models/party.js';
 
 const responseTemplate = (status, username, email) => ({ status, username, email })
 
 export default (req, res, next) => ({
-  login: ({ email, password }) => {
+
+  // register and login
+
+  loginUser: ({ email, password }) => {
     return User.findOne({ email }).then(({ _doc }) => {
       if (bcrypt.compareSync(password, _doc.password)) {
         req.session.email = _doc.email;
@@ -14,7 +18,7 @@ export default (req, res, next) => ({
       return responseTemplate('WRONG_EMAIL_OR_PASSWORD');
     });
   },
-  register: ({ username, email, password }) => {
+  registerUser: ({ username, email, password }) => {
     return User.findOne({ email })
       .then(isUserAlreadyExist => {
         if (isUserAlreadyExist) return responseTemplate('EMAIL_IS_ENGAGED');
@@ -24,8 +28,12 @@ export default (req, res, next) => ({
           username,
           email,
           password: bcrypt.hashSync(password, 3),
-          characters: [],
-          campaigns: []
+          parties: [],
+          weight: null,
+          gender: null,
+          height: null,
+          age: null,
+          private: null
         };
 
         User.create(newUser);
@@ -39,6 +47,25 @@ export default (req, res, next) => ({
         console.log(err);
         return err;
       });
-  }
+  },
+
+  //users
+
+  users: () => {
+    return User.find()
+      .then(user => user)
+  },
+  user: ({ email, id }) => {
+    if (email) {
+      return User.findOne({ email })
+        .then(user => user)
+    }
+  },
+
+  //party
+
+  createParty: () => true,
+  joinParty: () => true,
+  endParty: () => true
+
 });
-////https://stackoverflow.com/questions/37059523/graphql-get-all-fields-from-nested-json-object

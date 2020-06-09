@@ -4,8 +4,49 @@ schema {
 }
 
 type Query {
-  hi: String
+  users:[User]
+  user(email:String id: String): User
 }
+
 type Mutation {
-  hihi: String
+  registerUser(username: String email: String password: String): LoginResponse
+  loginUser(email: String password: String): LoginResponse
+
+  createParty( name: String ownerId: String ): Boolean
+  joinParty( id: String ): Boolean
+  endParty( id: String ): Boolean
+}
+
+type User {
+  username: String
+  parties:[Party]
+  weight: Float
+  gender: String
+  height: Float
+  age: Float
+  private: Boolean
+}
+
+type Party {
+  name: String
+  owner: User
+  members: [User]
+  measures: [UserMeasures]
+}
+
+type UserMeasures {
+  user: User
+  party: Party
+  measures: [Measure]
+}
+
+type Measure {
+  name: String
+  number: Float
+}
+
+type LoginResponse {
+  status: String
+  username: String
+  email: String
 }
