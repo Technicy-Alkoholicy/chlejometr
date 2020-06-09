@@ -6,7 +6,7 @@ export const partySchema = new Schema(
   {
     name: String,
     members: [mongoose.Types.ObjectId],
-    measures: [mongoose.Types.ObjectId]
+    membersShots: [{ userId: mongoose.Types.ObjectId, shots: [{ percent: Number, number: Number }] }]
   },
   { collection: 'parties' }
 );

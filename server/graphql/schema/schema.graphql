@@ -13,7 +13,7 @@ type Mutation {
   loginUser(email: String password: String): LoginResponse
 
   createParty( name: String ownerId: String ): Boolean
-  joinParty( id: String ): Boolean
+  joinParty(partyId: String): Boolean
   endParty( id: String ): Boolean
 }
 
@@ -30,18 +30,18 @@ type User {
 type Party {
   name: String
   owner: User
+  isPartyOver: Boolean
   members: [User]
-  measures: [UserMeasures]
+  membersShots: [MembersShots]
 }
 
-type UserMeasures {
+type MembersShots {
   user: User
-  party: Party
-  measures: [Measure]
+  shots: Shots
 }
 
-type Measure {
-  name: String
+type Shots {
+  percent: Float
   number: Float
 }
 

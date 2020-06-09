@@ -1,4 +1,7 @@
+const ObjectId = require('mongodb').ObjectID;
+
 import bcrypt from 'bcrypt';
+
 import User from '../../models/user.js';
 import Party from '../../models/party.js';
 
@@ -22,7 +25,6 @@ export default (req, res, next) => ({
     return User.findOne({ email })
       .then(isUserAlreadyExist => {
         if (isUserAlreadyExist) return responseTemplate('EMAIL_IS_ENGAGED');
-        console.log(username);
 
         const newUser = {
           username,
@@ -49,7 +51,7 @@ export default (req, res, next) => ({
       });
   },
 
-  //users
+  //user
 
   users: () => {
     return User.find()
@@ -64,8 +66,36 @@ export default (req, res, next) => ({
 
   //party
 
-  createParty: () => true,
-  joinParty: () => true,
+  createParty: async ({ name }) => {
+    const email = req.session.email
+    const id = await User.findOne({ email }).then(({ _doc }) => _doc._id)
+
+    const newParty = {
+      name,
+      owner: id,
+      isPartyOver: false,
+      members: [id],
+      membersShots: [{ userId: id, shots: [] }]
+    };
+
+    Party.create(newParty);
+
+    return true
+  },
+  joinParty: async ({ partyId }) => {
+    const email = req.session.email
+    const id = await User.findOne({ email }).then(({ _doc }) => _doc._id)
+
+    const doc = await Party.findOne({ _id: ObjectId(partyId) })
+    if (doc.name) {
+      doc.members = [...doc.members, id]
+      await doc.save();
+
+      return true
+    }
+
+    return false
+  },
   endParty: () => true
 
 });
