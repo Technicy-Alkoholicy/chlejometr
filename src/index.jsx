@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './reducers/index.js';
 
 import StartPage from './components/StartPage/StartPage.jsx';
+import ProfilePage from './components/ProfilePage/ProfilePage.jsx';
 
 import './style.sass';
 
@@ -15,6 +16,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route exact path="/" component={StartPage} />
+        <Route path="/profile" component={ProfilePage} />
       </Switch>
     </Router>
   </Provider>
