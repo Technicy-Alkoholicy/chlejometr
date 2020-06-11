@@ -8,6 +8,7 @@ import { store } from './reducers/index.js';
 
 import StartPage from './components/StartPage/StartPage.jsx';
 import ProfilePage from './components/ProfilePage/ProfilePage.jsx';
+import MainPage from './components/MainPage/MainPage.jsx';
 
 import './style.sass';
 
@@ -17,6 +18,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={StartPage} />
         <Route path="/profile" component={ProfilePage} />
+        <Route path="/main" component={MainPage} />
       </Switch>
     </Router>
   </Provider>

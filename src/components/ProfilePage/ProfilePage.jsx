@@ -13,9 +13,9 @@ class ProfilePage extends React.Component {
     username: { value: '', isActive: false },
     password: { value: '', isActive: false },
     gender: { value: '', isActive: false },
-    age: { value: null, isActive: false },
-    height: { value: null, isActive: false },
-    weight: { value: null, isActive: false }
+    age: { value: '', isActive: false },
+    height: { value: '', isActive: false },
+    weight: { value: '', isActive: false }
   };
 
   isActiveToggle = type => {
