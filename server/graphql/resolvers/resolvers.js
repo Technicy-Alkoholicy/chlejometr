@@ -1,10 +1,17 @@
+const ObjectId = require('mongodb').ObjectID;
+
 import bcrypt from 'bcrypt';
+
 import User from '../../models/user.js';
+import Party from '../../models/party.js';
 
 const responseTemplate = (status, username, email) => ({ status, username, email })
 
 export default (req, res, next) => ({
-  login: ({ email, password }) => {
+
+  // register and login
+
+  loginUser: ({ email, password }) => {
     return User.findOne({ email }).then(({ _doc }) => {
       if (bcrypt.compareSync(password, _doc.password)) {
         req.session.email = _doc.email;
@@ -14,18 +21,22 @@ export default (req, res, next) => ({
       return responseTemplate('WRONG_EMAIL_OR_PASSWORD');
     });
   },
-  register: ({ username, email, password }) => {
+  registerUser: ({ username, email, password }) => {
     return User.findOne({ email })
       .then(isUserAlreadyExist => {
         if (isUserAlreadyExist) return responseTemplate('EMAIL_IS_ENGAGED');
-        console.log(username);
 
         const newUser = {
           username,
           email,
           password: bcrypt.hashSync(password, 3),
-          characters: [],
-          campaigns: []
+          weight: null,
+          gender: null,
+          height: null,
+          age: null,
+          private: null,
+          parties: [],
+          friends: []
         };
 
         User.create(newUser);
@@ -39,6 +50,62 @@ export default (req, res, next) => ({
         console.log(err);
         return err;
       });
+  },
+
+  //user
+
+  users: () => {
+    return User.find()
+      .then(user => user)
+  },
+  user: ({ email, id }) => {
+    if (email) {
+      return User.findOne({ email })
+        .then(user => user)
+    }
+  },
+
+  //party
+  parties: async () => Party.find(),
+  party: async ({ partyId }) => Party.findOne({ _id: partyId }),
+  createParty: async ({ name }) => {
+    const email = req.session.email
+    const id = await User.findOne({ email }).then(({ _doc }) => _doc._id)
+
+    const newParty = {
+      name,
+      owner: id,
+      isPartyOver: false,
+      members: [id],
+      membersShots: [{ userId: id, shots: [] }]
+    };
+
+    Party.create(newParty);
+
+    return true
+  },
+  joinParty: async ({ partyId }) => {
+    const email = req.session.email
+    const id = await User.findOne({ email }).then(({ _doc }) => _doc._id)
+
+    const doc = await Party.findOne({ _id: ObjectId(partyId) })
+    if (doc.name) {
+      doc.members = [...doc.members, id]
+      await doc.save();
+
+      return true
+    }
+    return false
+  },
+  endParty: async ({ partyId }) => {
+    const doc = await Party.findOne({ _id: ObjectId(partyId) })
+    if (doc) {
+      doc.isPartyOver = true
+      await doc.save();
+
+      return true
+    }
+    return false
   }
+
 });
-////https://stackoverflow.com/questions/37059523/graphql-get-all-fields-from-nested-json-object

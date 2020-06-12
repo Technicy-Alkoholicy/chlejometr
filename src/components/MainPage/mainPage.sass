@@ -1,0 +1,105 @@
+@import '../sass/_mixins', '../sass/_variables'
+
+.mainPage
+    +wrap()
+    overflow: hidden
+
+.mainPage__nav
+    background-color: #C4C4C4
+    height: 50px
+
+.mainPage__topSection
+    margin: 20px 0
+
+.mainPage__h1
+    font-weight: bold
+    font-size: 40px
+    margin: 10px 0
+
+.mainPage__settings
+    width: 85vw
+    margin: 20px auto
+
+.mainPage__module
+    display: flex
+    justify-content: space-between
+    height: 40px
+    margin: 15px 0
+
+.mainPage__p
+    +center()
+    font-size: 24px
+    width: 50%
+
+.mainPage__editPole
+    display: flex
+    display: flex
+    justify-content: space-between
+    align-items: center
+    width: 50%
+    border: 1px solid #810000
+    border-radius: 20px
+    background-color: #C4C4C4
+
+.mainPage__unitP
+    width: 20%
+    font-size: 20px
+    color: #000
+
+.mainPage__input
+    +inputReset(0, 20px)
+    flex-grow: 1
+    margin-left: 20px
+
+.mainPage__btn
+    height: 40px
+    width: 40px
+    background-color: #810000
+    border: none
+    border-radius: 50%
+
+.mainPage__icon
+    display: none
+    font-size: 20px
+
+.mainPage__icon--active
+    display: block
+
+.mainPage__mainBtn
+    height: 200px
+    width: 200px
+    background-color: #810000
+    border: none
+    border-radius: 50%
+
+.mainPage__bottomSection
+    width: $sectionWidth
+    margin: 20px auto
+    background-color: #292A30
+    border: 1px solid #810000
+    border-radius: $sectionBorderRadius
+    overflow: hidden
+
+.mainPage__h2
+    font-size: 32px
+    background-color: #810000
+    color: #000
+
+.mainPage__bottomSectionMain
+    padding: 10px
+
+.mainPage__row
+    +center()
+
+.mainPage__bottomSectionP
+    +center()
+    width: 50%
+    height: 40px
+    font-size: 20px
+    border-bottom: 1px solid #000
+
+.mainPage__bottomSectionP:nth-child(1)
+    border-right: 1px solid #000
+
+.mainPage__row:nth-last-child(1) .mainPage__bottomSectionP
+    border-bottom: none

@@ -1,0 +1,72 @@
+@import '../sass/_mixins', '../sass/_variables'
+    
+*
+    font-weight: normal
+
+.profilePage
+    +wrap()
+    padding: 40px 0 10px
+
+.profilePage__section
+    width: $sectionWidth
+    margin: 20px auto
+    background-color: #292A30
+    border: 1px solid #4AA611
+    border-radius: $sectionBorderRadius
+    overflow: hidden
+
+.profilePage__h2
+    font-size: 32px
+    background-color: #4AA611
+    color: #000
+
+.profilePage__module
+    width: 95%
+    margin: 15px auto
+
+.profilePage__h3
+    font-size: 24px
+    margin-bottom: 5px
+
+.profilePage__editPole
+    display: flex
+    justify-content: space-between
+    width: 100%
+    height: 35px
+    background-color: #C4C4C4
+    border-radius: 17.5px
+
+.profilePage__input
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 80%
+    height: 100%
+    font-size: 20px
+    background-color: transparent
+    border: none
+    text-align: center
+    color: #000
+
+.profilePage__btn
+    border: none
+    background-color: #4AA611
+    height: 100%
+    width: 20%
+    font-size: 20px
+    border-radius: 17.5px
+
+.profilePage__section:nth-child(2)
+    border: 1px solid #1194A6
+
+.profilePage__section:nth-child(2) .profilePage__h2
+    background-color: #1194A6
+
+.profilePage__section:nth-child(2) .profilePage__btn
+    background-color: #1194A6
+
+.profilePage__icon
+    display: none
+
+.profilePage__icon--active
+    display: block
