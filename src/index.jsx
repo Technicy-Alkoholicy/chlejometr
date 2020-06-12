@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './reducers/index.js';
 
-import StartPage from './components/StartPage/StartPage.jsx';
+import LoginPage from './components/LoginPage/LoginPage.jsx';
 
 import './style.sass';
 
@@ -14,7 +14,7 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route exact path="/" component={StartPage} />
+        <Route exact path="/" component={LoginPage} />
       </Switch>
     </Router>
   </Provider>

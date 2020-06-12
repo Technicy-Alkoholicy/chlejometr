@@ -1,0 +1,76 @@
+@import "../sass/_mixins.sass"
+
+.loginPage
+    padding-top: 5px
+    &__logo
+        width: 90%
+        height: 70px
+        margin: 0 auto
+        display: flex
+        justify-content: center
+        &--left
+            +loginPageLogo("/static/beerGlass.png", 30deg)
+        &--right
+            +loginPageLogo("/static/vodkaShot.png", -30deg)
+    &__title
+        width: 80%
+        line-height: 70px
+        font-size: 40px
+        font-weight: bold
+        text-align: center
+    &__buttons
+        width: 90%
+        height: 60px
+        margin: 0 auto
+        display: flex
+        flex-wrap: wrap
+    &__button
+        height: 95%
+        width: 50%
+        background-color: transparent
+        font-size: 42px
+        border: none
+        &:hover
+            cursor: pointer
+    &__loginUnderline
+        position: absolute
+        top: 0
+        left: 0
+        width: 50%
+        height: 100%
+        background-color: #3743B4
+        transition: .4s
+        &Space
+            position: relative
+            width: 100%
+            height: 5%
+            background-color: #333
+    &__loginCredentials
+        +loginPageCredentals(0)
+    &__signupCredentials
+        +loginPageCredentals(100vw)
+    &__credentials
+        position: absolute
+        top: 140px
+        left: 0
+        height: calc( 100vh - 200px )
+        width: 100vw
+        overflow: hidden
+    &__text    
+        height: 70px
+        width: 70%
+        padding: 30px 0 15px 0
+        font-size: 32px
+    &__loginInput
+        +loginPageInput(#3743b4)
+    &__signupInput
+        +loginPageInput(#d4ad23)
+    &__loginButton
+        +loginPageButton(#3743b4)
+    &__signupButton
+        +loginPageButton(#d4ad23)
+    &__loginSectionButton
+        color: #3743b4
+        transition: .4s
+    &__signupSectionButton
+        transition: .4s

@@ -1,1 +1,38 @@
 
+=loginPageLogo($source, $rotate)
+    background-image: url($source)
+    width: 20%
+    height: 80%
+    background-size: contain
+    background-repeat: no-repeat
+    background-position: center
+    transform: rotate($rotate)
+
+=loginPageCredentals($left)
+    position: absolute
+    top: 0
+    left: $left
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: 100vw
+    height: calc( 100vh - 200px )
+    transition: .4s
+
+=loginPageInput($borderColor)
+    height: 50px
+    width: 70%
+    flex-shrink: 0
+    background-color: #575a63
+    border: 2px solid $borderColor
+    border-radius: 20px
+
+=loginPageButton($bgc)
+    margin-top: 40px 
+    background-color: $bgc
+    border: none
+    font-size: 32px
+    border-radius: 25px
+    width: 45%
+    height: 40px
