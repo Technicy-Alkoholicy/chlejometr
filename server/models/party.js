@@ -11,7 +11,7 @@ export const partySchema = new Schema(
     membersShots: [
       {
         userId: mongoose.Types.ObjectId,
-        shots: [{ percent: Number, number: Number }]
+        shots: [{ percent: Number, size: Number, date: Date }]
       }
     ]
   },

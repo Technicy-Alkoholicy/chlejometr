@@ -1,3 +1,5 @@
+scalar Date
+
 schema {
   query: Query
   mutation: Mutation
@@ -9,29 +11,43 @@ type Query {
   user(email:String id: String): User
 
   parties: [Party]
-  party(partyId: String): Party
+  party(partyId: String!): Party
+
+  shots(partyId: String!): [Shot]
 }
 
 type Mutation {
-  registerUser(username: String email: String password: String): LoginResponse
-  loginUser(email: String password: String): LoginResponse
+  registerUser(username: String! email: String! password: String!): LoginResponse
+  loginUser(email: String! password: String!): LoginResponse
+  uppdateUserData(
+      email: String
+      username: String
+      weight: Float
+      gender: String
+      height: Float
+      age: Float
+      private: Boolean
+    ):Boolean
 
-  createParty( name: String ownerId: String ): Boolean
-  joinParty( partyId: String ): Boolean
-  endParty( partyId: String ): Boolean
+  createParty( name: String! ): Boolean
+  joinParty( partyId: String! ): Boolean
+  endParty( partyId: String! ): Boolean
+
+  addShot(partyId:String!, size: Float!, percent: Float!): Boolean
 }
 
 """ user """
 type User {
   _id: String
+  email: String
   username: String
   weight: Float
   gender: String
   height: Float
   age: Float
-  private: Boolean
-  parties:[Party]
-  friends:[User]
+  isPrivate: Boolean
+  parties: [Party]
+  friends: [User]
 }
 
 """ party """
@@ -47,13 +63,15 @@ type Party {
 """ Shots drinked by specific user """
 type MembersShots {
   user: User
-  shots: Shots
+  shots: [Shot]
 }
 
 """ Drinked shots """
-type Shots {
+type Shot {
   percent: Float
-  number: Float
+  """size in ml"""
+  size: Float
+  date: Date
 }
 
 """ Response after login or register """
