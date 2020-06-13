@@ -119,7 +119,7 @@ class ProfilePage extends React.Component {
               <div className="profilePage__editPole">
                 {password.isActive ? (
                   <input
-                    type="text"
+                    type="password"
                     value={password.value}
                     className="profilePage__input"
                     onChange={e => {

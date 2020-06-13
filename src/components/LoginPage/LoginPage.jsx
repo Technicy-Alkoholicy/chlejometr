@@ -9,11 +9,12 @@ class LoginPage extends React.Component {
   state = {
     username: '',
     password: '',
-    email: ''
+    email: '',
+    isActive: false
   };
 
   render() {
-    const { username, password, email } = this.state;
+    const { username, password, email, isActive } = this.state;
     return (
       <>
         <div className="loginPage">
@@ -24,39 +25,39 @@ class LoginPage extends React.Component {
           </div>
           <div className="loginPage__buttons">
             <button
-              className="loginPage__button loginPage__loginSectionButton"
-              onClick={e => {
-                document.querySelector('.loginPage__loginCredentials').style.left = '0';
-                document.querySelector('.loginPage__signupCredentials').style.left = '100vw';
-                document.querySelector('.loginPage__loginUnderline').style.left = '0';
-                document.querySelector('.loginPage__loginUnderline').style.backgroundColor =
-                  '#3743B4';
-                e.target.style.color = '#3743B4';
-                document.querySelector('.loginPage__signupSectionButton').style.color = 'black';
+              className={`loginPage__button loginPage__loginSectionButton ${
+                !isActive ? 'loginPage__loginSectionButton--active' : ''
+              }`}
+              onClick={() => {
+                this.setState({ isActive: false });
               }}
             >
               Log In
             </button>
             <button
-              className="loginPage__button loginPage__signupSectionButton"
-              onClick={e => {
-                document.querySelector('.loginPage__loginCredentials').style.left = '-100vw';
-                document.querySelector('.loginPage__signupCredentials').style.left = '0';
-                document.querySelector('.loginPage__loginUnderline').style.left = '50%';
-                document.querySelector('.loginPage__loginUnderline').style.backgroundColor =
-                  '#d4ad23';
-                e.target.style.color = '#d4ad23';
-                document.querySelector('.loginPage__loginSectionButton').style.color = 'black';
+              className={`loginPage__button loginPage__signupSectionButton ${
+                isActive ? 'loginPage__signupSectionButton--active' : ''
+              }`}
+              onClick={() => {
+                this.setState({ isActive: true });
               }}
             >
               Sign Up
             </button>
             <div className="loginPage__loginUnderlineSpace">
-              <div className="loginPage__loginUnderline"></div>
+              <div
+                className={`loginPage__loginUnderline ${
+                  isActive ? 'loginPage__loginUnderline--active' : ''
+                }`}
+              ></div>
             </div>
           </div>
           <div className="loginPage__credentials">
-            <div className="loginPage__loginCredentials">
+            <div
+              className={`loginPage__loginCredentials ${
+                isActive ? 'loginPage__loginCredentials--active' : ''
+              }`}
+            >
               <p className="loginPage__text">Username</p>
               <input
                 type="text"
@@ -77,7 +78,11 @@ class LoginPage extends React.Component {
               />
               <button className="loginPage__loginButton">Log In</button>
             </div>
-            <div className="loginPage__signupCredentials">
+            <div
+              className={`loginPage__signupCredentials ${
+                isActive ? 'loginPage__signupCredentials--active' : ''
+              }`}
+            >
               <p className="loginPage__text">E-Mail</p>
               <input
                 type="text"
