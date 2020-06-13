@@ -11,7 +11,9 @@ class MainPage extends React.Component {
   state = {
     percent: { value: '', isActive: false },
     milliliters: { value: '', isActive: false },
-    shotsCounter: 0
+    shotsCounter: 0,
+    alcoholDrunk: 0,
+    isNextShotReady: true
   };
 
   isActiveToggle = type => {
@@ -22,18 +24,38 @@ class MainPage extends React.Component {
 
   valueChage = (e, type) => {
     const { state } = this;
+
+    if (e < 0) e = 0;
+    else if (type === 'milliliters') {
+      if (e > 1000) e = 1000;
+      e = Math.floor(e);
+    } else if (e > 100) e = 100;
+
     state[type].value = e;
     this.setState({ state });
   };
 
+  chillUpTimer = () => {
+    setTimeout(() => {
+      this.setState({ isNextShotReady: true });
+    }, 10000);
+  };
+
   nextShot = () => {
-    const { percent, milliliters } = this.state;
-    if (percent.value && milliliters.value)
-      this.setState({ shotsCounter: this.state.shotsCounter + 1 });
+    const { state } = this;
+    if (state.percent.value && state.milliliters.value && state.isNextShotReady) {
+      state.isNextShotReady = false;
+      this.chillUpTimer();
+
+      state.shotsCounter++;
+      state.alcoholDrunk += Math.floor(state.milliliters.value * (state.percent.value / 100));
+
+      this.setState({ state });
+    }
   };
 
   render() {
-    const { percent, milliliters, shotsCounter } = this.state;
+    const { percent, milliliters, shotsCounter, alcoholDrunk } = this.state;
     return (
       <>
         <div className="mainPage">
@@ -138,7 +160,7 @@ class MainPage extends React.Component {
               </div>
               <div className="mainPage__row">
                 <p className="mainPage__bottomSectionP">Alcohol drunk</p>
-                <p className="mainPage__bottomSectionP">408ml</p>
+                <p className="mainPage__bottomSectionP">{`${alcoholDrunk}ml`}</p>
               </div>
               <div className="mainPage__row">
                 <p className="mainPage__bottomSectionP">Alcohol in blood</p>
