@@ -10,6 +10,7 @@ import LoginPage from './components/LoginPage/LoginPage.jsx';
 import StartPage from './components/StartPage/StartPage.jsx';
 import ProfilePage from './components/ProfilePage/ProfilePage.jsx';
 import MainPage from './components/MainPage/MainPage.jsx';
+import HomePage from './components/HomePage/HomePage.jsx';
 
 import './style.sass';
 
@@ -21,6 +22,7 @@ const App = () => (
         {/* <Route exact path="/" component={StartPage} /> */}
         <Route path="/profile" component={ProfilePage} />
         <Route path="/main" component={MainPage} />
+        <Route path="/home" component={HomePage} />
       </Switch>
     </Router>
   </Provider>
