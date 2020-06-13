@@ -1,0 +1,65 @@
+@import '../sass/_mixins', '../sass/_variables'
+
+.homePage
+    +wrap()
+
+.homePage__section
+    width: $sectionWidth
+    margin: 20px auto
+    background-color: #292A30
+    border: 1px solid #D05814
+    border-radius: $sectionBorderRadius
+    overflow: hidden
+    &:nth-of-type(2)
+        border: 1px solid #24F7C4
+
+.homePage__h2
+    font-size: 32px
+    background-color: #D05814
+    color: #000
+    .homePage__section:nth-of-type(2) &
+        background-color: #24F7C4
+
+.homePage__party
+    display: flex
+    justify-content: space-between
+    align-items: center
+    height: 36px
+    width: 88%
+    background-color: #C4C4C4
+    margin: 20px auto
+    border: 1px solid #D05814
+    border-radius: 18px
+    .homePage__section:nth-of-type(2) &
+        border: 1px solid #24F7C4
+
+.homePage__p
+    font-size: 20px
+    color: #000
+    flex-grow: 1
+
+.homePage__btn
+    +center()
+    height: 36px
+    width: 36px
+    margin: 0 auto
+    border: none
+    border-radius: 50%
+    background-color: #D05814
+    .homePage__section:nth-of-type(2) &
+        background-color: #24F7C4
+
+.homePage__icon
+    font-size: 26px
+
+.homePage__longP
+    font-size: 18px
+
+.homePage__addBtn
+    margin: 20px auto
+
+.homePage__input
+    +inputReset(auto, 20px)
+    flex-grow: 1
+
+
