@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import {  } from '../../actions';
 
+import Nav from '../common/Nav/Nav.jsx';
+
 import './profilePage.sass';
 
 class ProfilePage extends React.Component {
@@ -35,6 +37,7 @@ class ProfilePage extends React.Component {
     return (
       <>
         <div className="profilePage">
+          <Nav page="ProfilePage" />
           <section className="profilePage__section">
             <h2 className="profilePage__h2">Account Details</h2>
 

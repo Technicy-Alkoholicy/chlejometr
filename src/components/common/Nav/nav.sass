@@ -1,41 +1,64 @@
+@import '../../sass/_mixins', '../../sass/_variables'
+
 .nav
     position: relative
-    height: 60px
-    background-color: #010101
-    border-bottom: 1px solid #810000
+    height: 50px
 
 .nav__ul
-    position: absolute
-    top: 0
-    right: 0
-    display: flex
-    justify-content: center
-    align-items: center
-    height: 100%
+    +center()
     width: 100%
+    height: 100%
     list-style: none
 
 .nav__li
-    display: flex
-    align-items: center
+    +center()
+    width: 50%
     height: 100%
-    flex-grow: 1
-
+        
 .nav__a
-    display: flex
-    justify-content: center
-    align-items: center
-    height: 80%
+    +center()
     flex-grow: 1
+    height: 100%
     text-decoration: none
-    color: #fff
-    font-size: 24px
-    border-right: 1px solid #810000
+    color: #000
+    font-size: 32px
+    &--MainPage
+        color: #810000
+    .nav__li:nth-of-type(2) &--MainPage
+        color: #EBFF00
+    &--ProfilePage
+        color: #4AA611
+    .nav__li:nth-of-type(2) &--ProfilePage
+        color: #1194A6
+    &--HomePage
+        color: #D05814
+    .nav__li:nth-of-type(2) &--HomePage
+        color: #24F7C4
 
-.nav__li:last-child .nav__a
-    border: none
+.nav__horizontalLine
+    position: absolute
+    left: 0
+    bottom: 0
+    width: 100%
+    height: 2px
+    &--MainPage
+        background-image: linear-gradient(to right, #810000, #810000, #EBFF00, #EBFF00)
+    &--ProfilePage
+        background-image: linear-gradient(to right, #4AA611, #4AA611, #1194A6, #1194A6)
+    &--HomePage
+        background-image: linear-gradient(to right, #D05814, #D05814, #24F7C4, #24F7C4)
 
-.nav__a--active 
-    color: #CC0000
+.nav__verticalLine
+    position: absolute
+    left: 50%
+    top: 50%
+    width: 2px
+    height: 32px
+    transform: translate(-50%,-50%)
+    &--MainPage
+        background-color: #B57E00
+    &--ProfilePage
+        background-color: #2D9C5D
+    &--HomePage
+        background-color: #7AA76C
 
-@import ../../sass/_media

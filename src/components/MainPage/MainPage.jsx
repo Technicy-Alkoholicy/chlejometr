@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import {  } from '../../actions';
 
+import Nav from '../common/Nav/Nav.jsx';
+
 import './mainPage.sass';
 
 class MainPage extends React.Component {
@@ -59,7 +61,7 @@ class MainPage extends React.Component {
     return (
       <>
         <div className="mainPage">
-          <nav className="mainPage__nav">miejsce na nav</nav>
+          <Nav page="MainPage" />
           <section className="mainPage__topSection">
             <h1 className="mainPage__h1">Drink Up!</h1>
             <div className="mainPage__settings">
