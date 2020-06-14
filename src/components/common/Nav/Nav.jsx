@@ -15,7 +15,7 @@ class Nav extends React.Component {
           <>
             <ul className="nav__ul">
               <li className="nav__li">
-                <Link className="nav__a nav__a--MainPage" to={`/`}>
+                <Link className="nav__a nav__a--MainPage" to={`/home`}>
                   Home
                 </Link>
               </li>
@@ -35,7 +35,7 @@ class Nav extends React.Component {
           <>
             <ul className="nav__ul">
               <li className="nav__li">
-                <Link className="nav__a nav__a--ProfilePage" to={`/`}>
+                <Link className="nav__a nav__a--ProfilePage" to={`/home`}>
                   Home
                 </Link>
               </li>
@@ -55,7 +55,7 @@ class Nav extends React.Component {
           <>
             <ul className="nav__ul">
               <li className="nav__li">
-                <Link className="nav__a nav__a--HomePage" to={`/`}>
+                <Link className="nav__a nav__a--HomePage" to={`/home`}>
                   Home
                 </Link>
               </li>
@@ -70,6 +70,46 @@ class Nav extends React.Component {
             <div className="nav__verticalLine nav__verticalLine--HomePage"></div>
           </>
         );
+      case 'SummaryPage':
+        return (
+          <>
+            <ul className="nav__ul">
+              <li className="nav__li">
+                <Link className="nav__a nav__a--SummaryPage" to={`/home`}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav__li">
+                <Link className="nav__a nav__a--SummaryPage" to={`/main`}>
+                  DRINK UP!
+                </Link>
+              </li>
+            </ul>
+
+            <div className="nav__horizontalLine nav__horizontalLine--SummaryPage"></div>
+            <div className="nav__verticalLine nav__verticalLine--SummaryPage"></div>
+          </>
+        );
+      // case 'FriendsPage':
+      //   return (
+      //     <>
+      //       <ul className="nav__ul">
+      //         <li className="nav__li">
+      //           <Link className="nav__a nav__a--FriendsPage" to={`/home`}>
+      //             Home
+      //           </Link>
+      //         </li>
+      //         <li className="nav__li">
+      //           <Link className="nav__a nav__a--FriendsPage" to={`/main`}>
+      //             DRINK UP!
+      //           </Link>
+      //         </li>
+      //       </ul>
+
+      //       <div className="nav__horizontalLine nav__horizontalLine--FriendsPage"></div>
+      //       <div className="nav__verticalLine nav__verticalLine--FriendsPage"></div>
+      //     </>
+      //   );
       default:
         return <p>Nav error (bad: this.props.page)</p>;
     }
