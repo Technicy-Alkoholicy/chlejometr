@@ -55,13 +55,13 @@ class Nav extends React.Component {
           <>
             <ul className="nav__ul">
               <li className="nav__li">
-                <Link className="nav__a nav__a--HomePage" to={`/home`}>
-                  Home
+                <Link className="nav__a nav__a--HomePage" to={`/profile`}>
+                  Profile
                 </Link>
               </li>
               <li className="nav__li">
                 <Link className="nav__a nav__a--HomePage" to={`/`}>
-                  Log Out
+                  Friends
                 </Link>
               </li>
             </ul>
