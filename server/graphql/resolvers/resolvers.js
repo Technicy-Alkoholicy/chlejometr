@@ -41,11 +41,13 @@ export default (req, res, next) => {
             friends: []
           };
 
-          await User.create(newUser);
+          await User.create(newUser).then(async () => {
+            req.session.email = email
+            req.session.userId = await User.findOne({ email }).then(({ _doc }) => _doc._id)
+            req.session.loggined = true;
+          })
 
-          req.session.email = email
-          req.session.userId = await User.findOne({ email }).then(({ _doc }) => _doc._id)
-          req.session.loggined = true;
+
 
           return responseTemplate('SUCCESS', username, email);
         })
