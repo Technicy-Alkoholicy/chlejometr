@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-// import {  } from '../../actions';
+import { changeUserData, getUserInfo } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -11,25 +11,49 @@ import './profilePage.sass';
 
 class ProfilePage extends React.Component {
   state = {
-    email: { value: '', isActive: false },
+    email: { value: null, isActive: false },
     username: { value: '', isActive: false },
     password: { value: '', isActive: false },
     gender: { value: '', isActive: false },
     age: { value: '', isActive: false },
     height: { value: '', isActive: false },
-    weight: { value: '', isActive: false }
+    weight: { value: '', isActive: false },
+    isDataFetched: false
   };
 
+  componentDidMount = () => {
+    this.props.getUserInfo();
+  };
+
+  componentDidUpdate() {
+    if (this.props.user.email && !this.state.isDataFetched) {
+      const state = { ...this.state };
+      console.log(this.props.user);
+
+      state.email.value = this.props.user.email;
+      state.username.value = this.props.user.username;
+      state.gender.value = this.props.user.gender;
+      state.age.value = this.props.user.age;
+      state.height.value = this.props.user.height;
+      state.weight.value = this.props.user.weight;
+      console.log(this.state);
+
+      state.isDataFetched = true;
+
+      this.setState(state);
+    }
+  }
+
   isActiveToggle = type => {
-    const { state } = this;
+    const state = { ...this.state };
     state[type].isActive = !state[type].isActive;
-    this.setState({ state });
+    this.setState(state);
   };
 
   valueChage = (e, type) => {
-    const { state } = this;
+    const state = { ...this.state };
     state[type].value = e;
-    this.setState({ state });
+    this.setState(state);
   };
 
   render() {
@@ -178,6 +202,7 @@ class ProfilePage extends React.Component {
                 <button
                   className="profilePage__btn"
                   onClick={() => {
+                    if (gender.isActive) this.props.changeUserData(gender.value, 'gender');
                     this.isActiveToggle('gender');
                   }}
                 >
@@ -216,6 +241,7 @@ class ProfilePage extends React.Component {
                 <button
                   className="profilePage__btn"
                   onClick={() => {
+                    if (age.isActive) this.props.changeUserData(age.value, 'age');
                     this.isActiveToggle('age');
                   }}
                 >
@@ -254,6 +280,7 @@ class ProfilePage extends React.Component {
                 <button
                   className="profilePage__btn"
                   onClick={() => {
+                    if (height.isActive) this.props.changeUserData(height.value, 'height');
                     this.isActiveToggle('height');
                   }}
                 >
@@ -292,6 +319,7 @@ class ProfilePage extends React.Component {
                 <button
                   className="profilePage__btn"
                   onClick={() => {
+                    if (weight.isActive) this.props.changeUserData(weight.value, 'weight');
                     this.isActiveToggle('weight');
                   }}
                 >
@@ -317,7 +345,7 @@ class ProfilePage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ gameData }) => ({ gameData });
-const mapDispatchToProps = {};
+const mapStateToProps = ({ user }) => ({ user });
+const mapDispatchToProps = { changeUserData, getUserInfo };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

@@ -35,12 +35,12 @@ class HomePage extends React.Component {
       1
     );
 
-    this.setState({ state });
+    this.setState(state);
     this.divideParties();
   };
 
   divideParties = () => {
-    const { state } = this;
+    const state = { ...this.state };
     const parties = this.state.parties;
     const aParties = [];
     const fParties = [];
@@ -53,16 +53,16 @@ class HomePage extends React.Component {
     state.activeParties = aParties;
     state.finishedParties = fParties;
 
-    this.setState({ state });
+    this.setState(state);
   };
 
   chageNameParty = e => {
-    const { state } = this;
+    const state = { ...this.state };
     state.newParty.name = e;
-    this.setState({ state });
+    this.setState(state);
   };
   addParty = () => {
-    const { state } = this;
+    const state = { ...this.state };
 
     const parties = state.parties.sort((a, b) => {
       return a.id - b.id;
@@ -74,7 +74,7 @@ class HomePage extends React.Component {
     state.isNewPartyAdded = false;
 
     this.divideParties();
-    this.setState({ state });
+    this.setState(state);
   };
 
   render() {

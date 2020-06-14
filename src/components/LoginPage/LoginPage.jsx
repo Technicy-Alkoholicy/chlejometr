@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { logIn, signUp } from '../../actions';
+
 import beerLogo from '../../img/beerGlass.png';
 import vodkaLogo from '../../img/vodkaShot.png';
 import './LoginPage.sass';
@@ -58,13 +60,13 @@ class LoginPage extends React.Component {
                 isActive ? 'loginPage__loginCredentials--active' : ''
               }`}
             >
-              <p className="loginPage__text">Username</p>
+              <p className="loginPage__text">Email</p>
               <input
                 type="text"
                 className="loginPage__loginInput"
-                value={username}
+                value={email}
                 onChange={e => {
-                  this.setState({ username: e.target.value });
+                  this.setState({ email: e.target.value });
                 }}
               />
               <p className="loginPage__text">Password</p>
@@ -76,7 +78,12 @@ class LoginPage extends React.Component {
                   this.setState({ password: e.target.value });
                 }}
               />
-              <button className="loginPage__loginButton">Log In</button>
+              <button
+                className="loginPage__loginButton"
+                onClick={() => this.props.logIn(username, password)}
+              >
+                Log In
+              </button>
             </div>
             <div
               className={`loginPage__signupCredentials ${
@@ -110,7 +117,14 @@ class LoginPage extends React.Component {
                   this.setState({ password: e.target.value });
                 }}
               />
-              <button className="loginPage__signupButton">Sign Up</button>
+              <button
+                className="loginPage__signupButton"
+                onClick={() => {
+                  this.props.signUp(username, email, password);
+                }}
+              >
+                Sign Up
+              </button>
             </div>
           </div>
         </div>
@@ -119,7 +133,7 @@ class LoginPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({}) => ({});
-const mapDispatchToProps = {};
+const mapStateToProps = ({ user }) => ({ user });
+const mapDispatchToProps = { logIn, signUp };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

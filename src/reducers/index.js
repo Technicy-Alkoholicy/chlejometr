@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 
-import { gameData } from './gameData';
+import { user } from './user';
 
 import { createStore } from 'redux';
 
 const store = createStore(() => {});
 
 ({
-  gameData: gameData(store.dispatch)
+  user: user(store.dispatch)
 }
   |> combineReducers
   |> store.replaceReducer);
