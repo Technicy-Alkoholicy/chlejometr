@@ -41,7 +41,7 @@ export default (req, res, next) => {
             friends: []
           };
 
-          User.create(newUser);
+          await User.create(newUser);
 
           req.session.email = email
           req.session.userId = await User.findOne({ email }).then(({ _doc }) => _doc._id)
