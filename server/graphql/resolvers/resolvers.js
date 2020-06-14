@@ -8,7 +8,7 @@ import Party from '../../models/party.js';
 const responseTemplate = (status, username, email) => ({ status, username, email })
 
 export default (req, res, next) => {
-  const { userId, email, loggined } = req.session
+  const { userId, email, isLoggined } = req.session
   return {
 
     // register and login
@@ -17,7 +17,7 @@ export default (req, res, next) => {
         if (bcrypt.compareSync(password, _doc.password)) {
           req.session.email = email
           req.session.userId = await User.findOne({ email }).then(({ _doc }) => _doc._id)
-          req.session.loggined = true;
+          req.session.isLoggined = true;
           return responseTemplate('SUCCESS', _doc.username, _doc.email);
         }
         return responseTemplate('WRONG_EMAIL_OR_PASSWORD');
@@ -44,7 +44,7 @@ export default (req, res, next) => {
           await User.create(newUser).then(async () => {
             req.session.email = email
             req.session.userId = await User.findOne({ email }).then(({ _doc }) => _doc._id)
-            req.session.loggined = true;
+            req.session.isLoggined = true;
           })
 
           return responseTemplate('SUCCESS', username, email);
@@ -57,7 +57,7 @@ export default (req, res, next) => {
     logOut: async () => {
       req.session.email = ""
       req.session.userId = ""
-      req.session.loggined = "";
+      req.session.isLoggined = "";
 
       return true
     },
@@ -77,6 +77,8 @@ export default (req, res, next) => {
       }
     },
     uppdateUserData: async ({ email, username, weight, gender, height, age, isPrivate }) => {
+      if (!isLoggined) return null
+
       let user = await User.findOne({ _id: userId })
 
       user.email = email || user.email
@@ -94,6 +96,8 @@ export default (req, res, next) => {
 
     //party
     parties: async () => {
+      if (!isLoggined) return null
+
       const user = await User.findOne({ _id: userId })
       console.log(user, userId);
 
@@ -101,6 +105,8 @@ export default (req, res, next) => {
     },
     party: async ({ partyId }) => Party.findOne({ _id: partyId }),
     createParty: async ({ name }) => {
+      if (!isLoggined) return null
+
       const newParty = {
         name,
         owner: userId,
@@ -118,6 +124,8 @@ export default (req, res, next) => {
       return true
     },
     joinParty: async ({ partyId }) => {
+      if (!isLoggined) return null
+
       const party = await Party.findOne({ _id: ObjectId(partyId) })
       if (party.name) {
         party.members = [...party.members, userId]
@@ -129,6 +137,8 @@ export default (req, res, next) => {
       return false
     },
     endParty: async ({ partyId }) => {
+      if (!isLoggined) return null
+
       const party = await Party.findOne({ _id: ObjectId(partyId) })
       if (party) {
         party.isPartyOver = true
@@ -141,6 +151,8 @@ export default (req, res, next) => {
 
     //shots
     addShot: async ({ partyId, size, percent }) => {
+      if (!isLoggined) return null
+
       try {
         const party = await Party.findOne({ _id: ObjectId(partyId) })
 
@@ -156,6 +168,8 @@ export default (req, res, next) => {
       }
     },
     shots: async ({ partyId }) => {
+      if (!isLoggined) return null
+
       try {
         const party = await Party.findOne({ _id: ObjectId(partyId) })
         return party.membersShots.find(memberShots => memberShots.userId.toString() === userId).shots
