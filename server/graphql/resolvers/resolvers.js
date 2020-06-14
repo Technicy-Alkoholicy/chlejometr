@@ -47,14 +47,19 @@ export default (req, res, next) => {
             req.session.loggined = true;
           })
 
-
-
           return responseTemplate('SUCCESS', username, email);
         })
         .catch(err => {
           console.log(err);
           return err;
         });
+    },
+    logOut: async () => {
+      req.session.email = ""
+      req.session.userId = ""
+      req.session.loggined = "";
+
+      return true
     },
 
     //user

@@ -19,6 +19,8 @@ type Query {
 type Mutation {
   registerUser(username: String! email: String! password: String!): LoginResponse
   loginUser(email: String! password: String!): LoginResponse
+  logOut: Boolean
+
   uppdateUserData(
       email: String
       username: String
