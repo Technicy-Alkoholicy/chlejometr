@@ -11,6 +11,7 @@ import StartPage from './components/StartPage/StartPage.jsx';
 import ProfilePage from './components/ProfilePage/ProfilePage.jsx';
 import MainPage from './components/MainPage/MainPage.jsx';
 import HomePage from './components/HomePage/HomePage.jsx';
+import SummaryPage from './components/SummaryPage/SummaryPage.jsx';
 
 import './style.sass';
 
@@ -23,6 +24,7 @@ const App = () => (
         <Route path="/profile" component={ProfilePage} />
         <Route path="/main" component={MainPage} />
         <Route path="/home" component={HomePage} />
+        <Route path="/summary" component={SummaryPage} />
       </Switch>
     </Router>
   </Provider>

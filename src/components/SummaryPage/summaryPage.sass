@@ -1,0 +1,85 @@
+@import '../sass/_mixins', '../sass/_variables'
+
+.summaryPage
+    +wrap()
+
+.summaryPage__section
+    +section(#006604)
+    &:nth-of-type(2)
+        border: 1px solid #00D1FF
+    &:nth-of-type(3)
+        border: 1px solid #810000
+        padding-bottom: 20px
+
+.summaryPage__h2
+    font-size: 32px
+    color: #000
+    background-color: #006604
+    .summaryPage__section:nth-of-type(2) &
+        background-color: #00D1FF
+    .summaryPage__section:nth-of-type(3) &
+        background-color: #810000
+
+.summaryPage__sectionMain
+    padding: 10px
+
+.summaryPage__row
+    +center()
+    .summaryPage__section:nth-of-type(2) &:nth-of-type(1)
+        color: #00D1FF 
+
+.summaryPage__p
+    +center()
+    width: 50%
+    height: 40px
+    font-size: 20px
+    border-bottom: 1px solid #000
+    &:nth-child(1)
+        border-right: 1px solid #000
+    .summaryPage__row:nth-last-child(1) &
+        border-bottom: none
+    &--small
+        width: 25%
+        &:nth-of-type(2)
+            border-right: 1px solid #000
+
+.summaryPage__participant
+    display: flex
+    justify-content: space-between
+    align-items: center
+    height: 36px
+    width: 88%
+    background-color: #C4C4C4
+    margin: 20px auto
+    border: 1px solid #810000
+    border-radius: 18px
+
+.summaryPage__participantP
+    font-size: 20px
+    color: #000
+    flex-grow: 1
+            
+.summaryPage__participantIcon
+    font-size: 24px
+
+.summaryPage__participantBtn
+    +center()
+    height: 36px
+    width: 36px
+    margin: 0 auto
+    border: none
+    border-radius: 50%
+    background-color: #810000
+    .summaryPage__section>&
+        margin-top: 20px
+
+.summaryPage__btn
+    width: 250px
+    height: 50px
+    border: none
+    background-color: #810000
+    font-size: 32px
+    border-radius: 25px
+    margin-bottom: 20px
+
+
