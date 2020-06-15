@@ -69,8 +69,7 @@ export const user = dispatch => (
 
     case 'GET_USER_INFO': {
       fetch({
-        query: `
-        query {
+        query: `query {
           user(email:"${state.email}"){
             email,
             username,
@@ -82,7 +81,30 @@ export const user = dispatch => (
         }`
       }).then(res => {
         dispatch(updateUserData(res.data.user));
-        console.log(res.data);
+      });
+      return { ...state };
+    }
+
+    case 'GET_INFO_ABOUT_PARTIES': {
+      fetch({
+        query: `query{
+          parties{
+            _id
+            name
+            isPartyOver
+          }
+        }`
+      }).then(res => {
+        dispatch(updateUserData(res.data));
+      });
+      return { ...state };
+    }
+
+    case 'CREATE_PARTY': {
+      fetch({
+        query: `mutation{
+          createParty(name:"${value}")
+        }`
       });
       return { ...state };
     }

@@ -26,16 +26,18 @@ export const getUserInfo = () => ({
   type: 'GET_USER_INFO'
 });
 
-// export const register = (username, email, password) => ({
-//   type: 'REGISTER',
-//   username,
-//   email,
-//   password
-// });
-
 export const updateUserData = data => ({
   type: 'UPDATE_USER_DATA',
   data
+});
+
+export const getInfoAboutParties = () => ({
+  type: 'GET_INFO_ABOUT_PARTIES'
+});
+
+export const createParty = value => ({
+  type: 'CREATE_PARTY',
+  value
 });
 
 // export const changeActiveInLoginPage = whatActive => ({

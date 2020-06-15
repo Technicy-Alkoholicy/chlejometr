@@ -28,7 +28,6 @@ class ProfilePage extends React.Component {
   componentDidUpdate() {
     if (this.props.user.email && !this.state.isDataFetched) {
       const state = { ...this.state };
-      console.log(this.props.user);
 
       state.email.value = this.props.user.email;
       state.username.value = this.props.user.username;
@@ -36,7 +35,6 @@ class ProfilePage extends React.Component {
       state.age.value = this.props.user.age;
       state.height.value = this.props.user.height;
       state.weight.value = this.props.user.weight;
-      console.log(this.state);
 
       state.isDataFetched = true;
 
