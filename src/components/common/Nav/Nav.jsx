@@ -90,26 +90,26 @@ class Nav extends React.Component {
             <div className="nav__verticalLine nav__verticalLine--SummaryPage"></div>
           </>
         );
-      // case 'FriendsPage':
-      //   return (
-      //     <>
-      //       <ul className="nav__ul">
-      //         <li className="nav__li">
-      //           <Link className="nav__a nav__a--FriendsPage" to={`/home`}>
-      //             Home
-      //           </Link>
-      //         </li>
-      //         <li className="nav__li">
-      //           <Link className="nav__a nav__a--FriendsPage" to={`/main`}>
-      //             DRINK UP!
-      //           </Link>
-      //         </li>
-      //       </ul>
+      case 'FriendsPage':
+        return (
+          <>
+            <ul className="nav__ul">
+              <li className="nav__li">
+                <Link className="nav__a nav__a--FriendsPage" to={`/home`}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav__li">
+                <Link className="nav__a nav__a--FriendsPage" to={`/main`}>
+                  DRINK UP!
+                </Link>
+              </li>
+            </ul>
 
-      //       <div className="nav__horizontalLine nav__horizontalLine--FriendsPage"></div>
-      //       <div className="nav__verticalLine nav__verticalLine--FriendsPage"></div>
-      //     </>
-      //   );
+            <div className="nav__horizontalLine nav__horizontalLine--FriendsPage"></div>
+            <div className="nav__verticalLine nav__verticalLine--FriendsPage"></div>
+          </>
+        );
       default:
         return <p>Nav error (bad: this.props.page)</p>;
     }

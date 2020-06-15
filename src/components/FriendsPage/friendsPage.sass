@@ -1,0 +1,52 @@
+@import '../sass/_mixins', '../sass/_variables'
+
+.friendsPage
+    +wrap()
+
+.friendsPage__section
+    +section(#9B39BD)
+    &:nth-of-type(2)
+        border: 1px solid #89B50E
+
+.friendsPage__h2
+    font-size: 32px
+    background-color: #9B39BD
+    color: #000
+    .friendsPage__section:nth-of-type(2) &
+        background-color: #89B50E
+
+
+.friendsPage__friend
+    display: flex
+    justify-content: space-between
+    align-items: center
+    height: 36px
+    width: 88%
+    background-color: #C4C4C4
+    margin: 20px auto
+    border: 1px solid #9B39BD
+    border-radius: 18px
+    .friendsPage__section:nth-of-type(2) &
+        border: 1px solid #89B50E
+
+.friendsPage__p
+    font-size: 20px
+    color: #000
+    flex-grow: 1
+
+.friendsPage__btn
+    +center()
+    height: 36px
+    width: 36px
+    margin: 0 auto
+    border: none
+    border-radius: 50%
+    background-color: #9B39BD
+    .friendsPage__section:nth-of-type(2) &
+        background-color: #89B50E
+
+.friendsPage__icon
+    font-size: 26px
+
+.friendsPage__addBtn
+    margin: 20px auto
