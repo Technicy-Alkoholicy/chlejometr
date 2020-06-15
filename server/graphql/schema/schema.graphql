@@ -8,12 +8,14 @@ schema {
 
 type Query {
   users:[User]
-  """ specific user, use email or id"""
+  """ specific user, use email or id """
   user(email:String id: String): User
 
+  """ all users parties """
   parties: [Party]
   party(partyId: String!): Party
 
+  """ all shots drinked on specific party """
   shots(partyId: String!): [Shot]
 }
 
@@ -77,16 +79,24 @@ type MembersShots {
   shots: [Shot]
 }
 
-""" Drinked shots """
+" Drinked shots "
 type Shot {
   percent: Float
-  """size in ml"""
+  "size in ml"
   size: Float
   date: Date
 }
 
 """ Response after login or register """
 type LoginResponse {
+  """ 
+    status of login/register | 
+    posibilities: 
+    SUCCESS
+    USERNAME_AND_EMAIL_ARE_ENGAGED
+    USERNAME_IS_ENGAGED
+    USERNAME_IS_ENGAGED
+  """
   status: String
   username: String
   email: String
