@@ -12,6 +12,7 @@ import ProfilePage from './components/ProfilePage/ProfilePage.jsx';
 import MainPage from './components/MainPage/MainPage.jsx';
 import HomePage from './components/HomePage/HomePage.jsx';
 import SummaryPage from './components/SummaryPage/SummaryPage.jsx';
+import FriendsPage from './components/FriendsPage/FriendsPage.jsx';
 
 import './style.sass';
 
@@ -25,6 +26,7 @@ const App = () => (
         <Route path="/main" component={MainPage} />
         <Route path="/home" component={HomePage} />
         <Route path="/summary" component={SummaryPage} />
+        <Route path="/friends" component={FriendsPage} />
       </Switch>
     </Router>
   </Provider>

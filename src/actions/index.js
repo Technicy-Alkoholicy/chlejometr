@@ -3,23 +3,42 @@ export const socketioInit = gameToken => ({
   gameToken
 });
 
-// export const logIn = (email, password) => ({
-//   type: 'LOG_IN',
-//   email,
-//   password
-// });
+export const logIn = (email, password) => ({
+  type: 'LOG_IN',
+  email,
+  password
+});
 
-// export const register = (username, email, password) => ({
-//   type: 'REGISTER',
-//   username,
-//   email,
-//   password
-// });
+export const signUp = (username, email, password) => ({
+  type: 'SIGN_UP',
+  username,
+  email,
+  password
+});
 
-// export const updateData = (data) => ({
-//   type: 'UPDATE_DATA',
-//   data
-// });
+export const changeUserData = (value, optionToChange) => ({
+  type: 'CHANGE_USER_DATA',
+  value,
+  optionToChange
+});
+
+export const getUserInfo = () => ({
+  type: 'GET_USER_INFO'
+});
+
+export const updateUserData = data => ({
+  type: 'UPDATE_USER_DATA',
+  data
+});
+
+export const getInfoAboutParties = () => ({
+  type: 'GET_INFO_ABOUT_PARTIES'
+});
+
+export const createParty = value => ({
+  type: 'CREATE_PARTY',
+  value
+});
 
 // export const changeActiveInLoginPage = whatActive => ({
 //   type: 'CHANGE_ACTIVE_IN_LOGIN_PAGE',

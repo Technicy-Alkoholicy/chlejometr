@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
 
-import { gameData } from './gameData';
+import { user } from './user';
+import { party } from './party';
 
 import { createStore } from 'redux';
 
 const store = createStore(() => {});
 
 ({
-  gameData: gameData(store.dispatch)
+  user: user(store.dispatch),
+  party: party(store.dispatch)
 }
   |> combineReducers
   |> store.replaceReducer);

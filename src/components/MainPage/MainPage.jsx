@@ -19,13 +19,13 @@ class MainPage extends React.Component {
   };
 
   isActiveToggle = type => {
-    const { state } = this;
+    const state = { ...this.state };
     state[type].isActive = !state[type].isActive;
-    this.setState({ state });
+    this.setState(state);
   };
 
   valueChage = (e, type) => {
-    const { state } = this;
+    const state = { ...this.state };
 
     if (e < 0) e = 0;
     else if (type === 'milliliters') {
@@ -34,7 +34,7 @@ class MainPage extends React.Component {
     } else if (e > 100) e = 100;
 
     state[type].value = e;
-    this.setState({ state });
+    this.setState(state);
   };
 
   chillUpTimer = () => {
@@ -44,7 +44,7 @@ class MainPage extends React.Component {
   };
 
   nextShot = () => {
-    const { state } = this;
+    const state = { ...this.state };
     if (state.percent.value && state.milliliters.value && state.isNextShotReady) {
       state.isNextShotReady = false;
       this.chillUpTimer();
@@ -52,7 +52,7 @@ class MainPage extends React.Component {
       state.shotsCounter++;
       state.alcoholDrunk += Math.floor(state.milliliters.value * (state.percent.value / 100));
 
-      this.setState({ state });
+      this.setState(state);
     }
   };
 

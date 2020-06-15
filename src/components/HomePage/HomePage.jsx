@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-// import {  } from '../../actions';
+import { getInfoAboutParties, createParty } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -11,23 +11,29 @@ import './homePage.sass';
 
 class HomePage extends React.Component {
   state = {
-    parties: [
-      { name: 'testowa impreza', isPartyOver: false, id: 0 },
-      { name: 'zakończona impreza', isPartyOver: true, id: 1 },
-      { name: 'testowa impreza2', isPartyOver: true, id: 2 }
-    ],
     activeParties: [],
     finishedParties: [],
-    newParty: [{ name: '', isPartyOver: false, id: undefined }],
-    isNewPartyAdded: false
+    newPartyName: '',
+    isNewPartyAdded: false,
+    isDataFetched: 0
   };
 
-  componentDidMount() {
-    this.divideParties();
-  }
+  componentDidMount = () => {
+    this.props.getInfoAboutParties();
+  };
+
+  componentDidUpdate = () => {
+    if (this.props.user.parties && !this.state.isDataFetched) {
+      this.setState({
+        parties: this.props.user.parties,
+        isDataFetched: true,
+        ...this.divideParties()
+      });
+    }
+  };
 
   delParty = id => {
-    const { state } = this;
+    const state = { ...this.state };
     state.parties.splice(
       state.parties.findIndex(party => {
         party.id === id;
@@ -35,50 +41,32 @@ class HomePage extends React.Component {
       1
     );
 
-    this.setState({ state });
-    this.divideParties();
+    this.setState({ ...state, ...this.divideParties() });
   };
 
   divideParties = () => {
-    const { state } = this;
-    const parties = this.state.parties;
-    const aParties = [];
-    const fParties = [];
+    const activeParties = [];
+    const finishedParties = [];
 
-    parties.forEach(party => {
-      if (party.isPartyOver) fParties.push(party);
-      else aParties.push(party);
+    this.props.user.parties.forEach(party => {
+      if (party.isPartyOver) finishedParties.push(party);
+      else activeParties.push(party);
     });
 
-    state.activeParties = aParties;
-    state.finishedParties = fParties;
-
-    this.setState({ state });
+    return {
+      activeParties,
+      finishedParties
+    };
   };
 
   chageNameParty = e => {
-    const { state } = this;
-    state.newParty.name = e;
-    this.setState({ state });
-  };
-  addParty = () => {
-    const { state } = this;
-
-    const parties = state.parties.sort((a, b) => {
-      return a.id - b.id;
-    });
-    const index = parties.length - 1;
-    state.newParty.id = parties[index].id + 1;
-    state.parties.push(state.newParty);
-    state.newParty = [{ name: '', isPartyOver: false, id: undefined }];
-    state.isNewPartyAdded = false;
-
-    this.divideParties();
-    this.setState({ state });
+    const state = { ...this.state };
+    state.newPartyName = e;
+    this.setState(state);
   };
 
   render() {
-    const { activeParties, finishedParties, isNewPartyAdded, newParty } = this.state;
+    const { activeParties, finishedParties, isNewPartyAdded, newPartyName } = this.state;
     return (
       <>
         <div className="homePage">
@@ -90,18 +78,17 @@ class HomePage extends React.Component {
             {activeParties.map(party => (
               <div className="homePage__party">
                 <p className="homePage__p">{party.name}</p>
-                <button className="homePage__btn">
+                <Link to="/main" className="homePage__btn" onClick>
                   <i className="fas fa-arrow-right homePage__icon"></i>
-                </button>
+                </Link>
               </div>
             ))}
-
             {isNewPartyAdded && (
               <div className="homePage__party">
                 <input
                   type="text"
                   className="homePage__input"
-                  value={newParty.name}
+                  value={newPartyName}
                   onChange={e => {
                     this.chageNameParty(e.target.value);
                   }}
@@ -109,7 +96,15 @@ class HomePage extends React.Component {
                 <button
                   className="homePage__btn"
                   onClick={() => {
-                    this.addParty();
+                    this.props.createParty(newPartyName);
+                    this.setState({
+                      activeParties: [
+                        ...this.state.activeParties,
+                        { name: this.state.newPartyName, isPartyOver: false }
+                      ],
+                      newPartyName: '',
+                      isNewPartyAdded: false
+                    });
                   }}
                 >
                   <i className="fas fa-check homePage__icon"></i>
@@ -159,7 +154,7 @@ class HomePage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ gameData }) => ({ gameData });
-const mapDispatchToProps = {};
+const mapStateToProps = ({ user }) => ({ user });
+const mapDispatchToProps = { getInfoAboutParties, createParty };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
