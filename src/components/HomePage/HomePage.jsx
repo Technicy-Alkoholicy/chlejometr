@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getInfoAboutParties, createParty } from '../../actions';
+import { getInfoAboutParties, createParty, setPartyId } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -78,7 +78,13 @@ class HomePage extends React.Component {
             {activeParties.map(party => (
               <div className="homePage__party">
                 <p className="homePage__p">{party.name}</p>
-                <Link to="/main" className="homePage__btn" onClick>
+                <Link
+                  to="/main"
+                  className="homePage__btn"
+                  onClick={() => {
+                    this.props.setPartyId(party._id);
+                  }}
+                >
                   <i className="fas fa-arrow-right homePage__icon"></i>
                 </Link>
               </div>
@@ -155,6 +161,6 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = { getInfoAboutParties, createParty };
+const mapDispatchToProps = { getInfoAboutParties, createParty, setPartyId };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

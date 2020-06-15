@@ -3,17 +3,23 @@ export const socketioInit = gameToken => ({
   gameToken
 });
 
-export const logIn = (email, password) => ({
+export const logIn = (email, password, history) => ({
   type: 'LOG_IN',
   email,
-  password
+  password,
+  history
 });
 
-export const signUp = (username, email, password) => ({
+export const logOut = () => ({
+  type: 'LOG_OUT'
+});
+
+export const signUp = (username, email, password, history) => ({
   type: 'SIGN_UP',
   username,
   email,
-  password
+  password,
+  history
 });
 
 export const changeUserData = (value, optionToChange) => ({
@@ -31,6 +37,15 @@ export const updateUserData = data => ({
   data
 });
 
+export const wrongLoginData = () => ({
+  type: 'WRONG_LOGIN_DATA'
+});
+
+export const wrongSignUpData = status => ({
+  type: 'WRONG_SIGN_UP_DATA',
+  status
+});
+
 export const getInfoAboutParties = () => ({
   type: 'GET_INFO_ABOUT_PARTIES'
 });
@@ -40,67 +55,33 @@ export const createParty = value => ({
   value
 });
 
-// export const changeActiveInLoginPage = whatActive => ({
-//   type: 'CHANGE_ACTIVE_IN_LOGIN_PAGE',
-//   whatActive
-// });
+export const setPartyId = value => ({
+  type: 'SET_PARTY_ID',
+  value
+});
 
-// export const addCharacter = () => ({
-//   type: 'ADD_CHARACTER'
-// });
+//------------------------------------------party.js-----------------------------------------------------------
 
-// export const addCampaign = () => ({
-//   type: 'ADD_CAMPAIGN'
-// });
+export const getInfoAboutCurrentParty = (value, username) => ({
+  type: 'GET_INFO_ABOUT_CURRENT_PARTY',
+  value,
+  username
+});
 
-// export const editToggle = () => ({
-//   type: 'EDIT_TOGGLE'
-// });
+export const updatePartyData = data => ({
+  type: 'UPDATE_PARTY_DATA',
+  data
+});
 
-// export const changeTitle = (value, whatChange) => ({
-//   type: 'CHAGE_TITLE',
-//   value,
-//   whatChange
-// });
+export const updateShotData = (value, mlValue, percentValue, username) => ({
+  type: 'UPDATE_SHOT_DATA',
+  value,
+  mlValue,
+  percentValue,
+  username
+});
 
-// export const changePlayerName = (value, index) => ({
-//   type: 'CHAGE_PLAYER_NAME',
-//   value,
-//   index
-// });
-
-// export const addChampion = () => ({
-//   type: 'ADD_CHAMPION'
-// });
-
-// export const removeChampion = index => ({
-//   type: 'REMOVE_CHAMPION',
-//   index
-// });
-
-// export const editUsernameToggle = () => ({
-//   type: 'EDIT_USERNAME_TOGGLE'
-// });
-
-// export const editEmailToggle = () => ({
-//   type: 'EDIT_EMAIL_TOGGLE'
-// });
-
-// export const changeProfileData = (value, whatChange) => ({
-//   type: 'CHANGE_PROFILE_DATA',
-//   value,
-//   whatChange
-// });
-
-// export const saveUsername = () => ({
-//   type: 'SAVE_USERNAME'
-// });
-
-// export const changePassword = () => ({
-//   type: 'CHANGE_PASSWORD'
-// });
-
-// export const isActiveModuleToggle = whatChange => ({
-//   type: 'IS_ACTIVE_MODULE_TOGGLE',
-//   whatChange
-// });
+export const countAlcoholDrunk = username => ({
+  type: 'COUNT_ALOCOHOL_DRUNK',
+  username
+});

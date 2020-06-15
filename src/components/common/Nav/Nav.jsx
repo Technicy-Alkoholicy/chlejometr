@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-// import {  } from '../../actions';
+import { logOut } from '../../../actions';
 
 import './nav.sass';
 
@@ -40,7 +40,13 @@ class Nav extends React.Component {
                 </Link>
               </li>
               <li className="nav__li">
-                <Link className="nav__a nav__a--ProfilePage" to={`/`}>
+                <Link
+                  className="nav__a nav__a--ProfilePage"
+                  to={`/`}
+                  onClick={() => {
+                    this.props.logOut();
+                  }}
+                >
                   Log Out
                 </Link>
               </li>
@@ -124,7 +130,7 @@ class Nav extends React.Component {
   }
 }
 
-const mapStateToProps = ({ gameData }) => ({ gameData });
-const mapDispatchToProps = {};
+const mapStateToProps = ({ user }) => ({ user });
+const mapDispatchToProps = { logOut };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

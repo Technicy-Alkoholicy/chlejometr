@@ -1,4 +1,4 @@
-import { updateUserData } from '../actions/index.js';
+import { updateUserData, wrongLoginData, wrongSignUpData } from '../actions/index.js';
 
 const { createApolloFetch } = require('apollo-fetch');
 
@@ -9,9 +9,10 @@ const fetch = createApolloFetch({
 export const user = dispatch => (
   state = {
     email: '',
-    username: ''
+    username: '',
+    loginError: ''
   },
-  { type, email, password, username, data, value, optionToChange }
+  { type, email, password, username, data, value, optionToChange, history, status }
 ) => {
   switch (type) {
     case 'LOG_IN': {
@@ -25,7 +26,21 @@ export const user = dispatch => (
           }
         }`
       }).then(res => {
-        dispatch(updateUserData(res.data.loginUser));
+        if (res.data.loginUser?.status === 'SUCCESS') {
+          history.push('/home');
+          dispatch(updateUserData(res.data.loginUser));
+        } else {
+          dispatch(wrongLoginData());
+        }
+      });
+      return { ...state };
+    }
+
+    case 'LOG_OUT': {
+      fetch({
+        query: `mutation{
+          logOut
+        }`
       });
       return { ...state };
     }
@@ -40,8 +55,29 @@ export const user = dispatch => (
           }
         }`
       }).then(res => {
-        dispatch(updateUserData(res.data.registerUser));
+        if (res.data.registerUser?.status === 'SUCCESS') {
+          history.push('/home');
+          dispatch(updateUserData(res.data.registerUser));
+        } else {
+          dispatch(wrongSignUpData(res.data.registerUser.status));
+        }
       });
+      return { ...state };
+    }
+
+    case 'WRONG_LOGIN_DATA': {
+      state.loginError = 'Wrong email or password';
+      return { ...state };
+    }
+
+    case 'WRONG_SIGN_UP_DATA': {
+      if (status === 'EMAIL_IS_ENGAGED') {
+        state.signUpError = 'This email is already in use.';
+      } else if (status === 'USERNAME_IS_ENGAGED') {
+        state.signUpError = 'This username is already in use.';
+      } else {
+        state.signUpError = 'Username and email are already in use.';
+      }
       return { ...state };
     }
 
@@ -106,6 +142,11 @@ export const user = dispatch => (
           createParty(name:"${value}")
         }`
       });
+      return { ...state };
+    }
+
+    case 'SET_PARTY_ID': {
+      state.currentPartyId = value;
       return { ...state };
     }
 

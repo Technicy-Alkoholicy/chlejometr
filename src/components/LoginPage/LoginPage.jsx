@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 import { logIn, signUp } from '../../actions';
 
 import beerLogo from '../../img/beerGlass.png';
@@ -54,6 +56,7 @@ class LoginPage extends React.Component {
               ></div>
             </div>
           </div>
+
           <div className="loginPage__credentials">
             <div
               className={`loginPage__loginCredentials ${
@@ -78,12 +81,17 @@ class LoginPage extends React.Component {
                   this.setState({ password: e.target.value });
                 }}
               />
+
               <button
                 className="loginPage__loginButton"
-                onClick={() => this.props.logIn(username, password)}
+                onClick={() => {
+                  this.props.logIn(email, password, this.props.history);
+                }}
               >
                 Log In
               </button>
+
+              <p className="loginPage__error">{this.props.user.loginError}</p>
             </div>
             <div
               className={`loginPage__signupCredentials ${
@@ -120,13 +128,14 @@ class LoginPage extends React.Component {
               <button
                 className="loginPage__signupButton"
                 onClick={() => {
-                  this.props.signUp(username, email, password);
+                  this.props.signUp(username, email, password, this.props.history);
                 }}
               >
                 Sign Up
               </button>
             </div>
           </div>
+          <p className="loginPage__error">{this.props.user.signUpError}</p>
         </div>
       </>
     );

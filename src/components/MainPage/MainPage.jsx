@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-// import {  } from '../../actions';
+import { getInfoAboutCurrentParty, updateShotData } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -17,6 +17,10 @@ class MainPage extends React.Component {
     alcoholDrunk: 0,
     isNextShotReady: true
   };
+
+  componentDidMount() {
+    this.props.getInfoAboutCurrentParty(this.props.user.currentPartyId, this.props.user.username);
+  }
 
   isActiveToggle = type => {
     const state = { ...this.state };
@@ -49,8 +53,12 @@ class MainPage extends React.Component {
       state.isNextShotReady = false;
       this.chillUpTimer();
 
-      state.shotsCounter++;
-      state.alcoholDrunk += Math.floor(state.milliliters.value * (state.percent.value / 100));
+      this.props.updateShotData(
+        this.props.party.currentPartyId,
+        state.milliliters.value,
+        state.percent.value,
+        this.props.user.username
+      );
 
       this.setState(state);
     }
@@ -64,6 +72,7 @@ class MainPage extends React.Component {
           <Nav page="MainPage" />
           <section className="mainPage__topSection">
             <h1 className="mainPage__h1">Drink Up!</h1>
+            <h3 className="mainPage__h3">Party name: {this.props.party.name}</h3>
             <div className="mainPage__settings">
               <div className="mainPage__module">
                 <p className="mainPage__p">Alcohol %</p>
@@ -158,11 +167,23 @@ class MainPage extends React.Component {
             <div className="mainPage__bottomSectionMain">
               <div className="mainPage__row">
                 <p className="mainPage__bottomSectionP">Shots/Drinks</p>
-                <p className="mainPage__bottomSectionP">{shotsCounter}</p>
+                <p className="mainPage__bottomSectionP">
+                  {this.props.party.membersShots?.[
+                    this.props.party.membersShots.findIndex(
+                      member => member.user.username === this.props.user.username
+                    )
+                  ].shots.length
+                    ? this.props.party.membersShots[
+                        this.props.party.membersShots.findIndex(
+                          member => member.user.username === this.props.user.username
+                        )
+                      ].shots.length
+                    : 0}
+                </p>
               </div>
               <div className="mainPage__row">
-                <p className="mainPage__bottomSectionP">Alcohol drunk</p>
-                <p className="mainPage__bottomSectionP">{`${alcoholDrunk}ml`}</p>
+                <p className="mainPage__bottomSectionP">Etanol drunk</p>
+                <p className="mainPage__bottomSectionP">{`${this.props.party.alcoholDrunk}ml`}</p>
               </div>
               <div className="mainPage__row">
                 <p className="mainPage__bottomSectionP">Alcohol in blood</p>
@@ -180,7 +201,7 @@ class MainPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ gameData }) => ({ gameData });
-const mapDispatchToProps = {};
+const mapStateToProps = ({ party, user }) => ({ party, user });
+const mapDispatchToProps = { getInfoAboutCurrentParty, updateShotData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
