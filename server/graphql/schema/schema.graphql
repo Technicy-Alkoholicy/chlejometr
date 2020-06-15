@@ -3,6 +3,7 @@ scalar Date
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription 
 }
 
 type Query {
@@ -22,6 +23,8 @@ type Mutation {
   logOut: Boolean
 
   uppdateUserData(
+      passwordToCheck: String
+      password: String
       email: String
       username: String
       weight: Float
@@ -34,8 +37,14 @@ type Mutation {
   createParty( name: String! ): Boolean
   joinParty( partyId: String! ): Boolean
   endParty( partyId: String! ): Boolean
+  leaveParty( partyId: String!): Boolean
+  kickFromParty( partyId: String!, userId: String username: String): Boolean
 
   addShot(partyId:String!, size: Float!, percent: Float!): Boolean
+}
+
+type Subscription{
+  foo:String
 }
 
 """ user """
