@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getInfoAboutParties, createParty, setPartyId } from '../../actions';
+import { getInfoAboutParties, createParty, setPartyId, checkIsUserLogged } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -19,6 +19,7 @@ class HomePage extends React.Component {
   };
 
   componentDidMount = () => {
+    this.props.checkIsUserLogged(this.props.history);
     this.props.getInfoAboutParties();
   };
 
@@ -161,6 +162,6 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = { getInfoAboutParties, createParty, setPartyId };
+const mapDispatchToProps = { getInfoAboutParties, createParty, setPartyId, checkIsUserLogged };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

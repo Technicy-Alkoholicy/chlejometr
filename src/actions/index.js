@@ -60,6 +60,11 @@ export const setPartyId = value => ({
   value
 });
 
+export const checkIsUserLogged = history => ({
+  type: 'CHECK_IS_USER_LOGGED',
+  history
+});
+
 //------------------------------------------party.js-----------------------------------------------------------
 
 export const getInfoAboutCurrentParty = (value, username) => ({

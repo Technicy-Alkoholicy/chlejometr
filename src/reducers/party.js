@@ -1,4 +1,9 @@
-import { updatePartyData, getInfoAboutCurrentParty, countAlcoholDrunk } from '../actions/index.js';
+import {
+  updatePartyData,
+  getInfoAboutCurrentParty,
+  countAlcoholDrunk,
+  getInfoAboutParties
+} from '../actions/index.js';
 
 const { createApolloFetch } = require('apollo-fetch');
 
@@ -8,26 +13,13 @@ const fetch = createApolloFetch({
 
 export const party = dispatch => (
   state = {
-    alcoholDrunk: 0
+    alcoholDrunk: 0,
+    isDataNeedUpdate: false
   },
-  { type, value, data, mlValue, percentValue, username }
+  { type, value, data, mlValue, percentValue, username, history }
 ) => {
   switch (type) {
-    // case 'LOG_IN': {
-    //   fetch({
-    //     //(XˣᴰkurwaˣᴰDˣᴰ)ˣᴰ
-    //     query: `mutation {
-    //       loginUser(email:"${email}" password:"${password}"){
-    //         status
-    //         username
-    //         email
-    //       }
-    //     }`
-    //   }).then(res => {
-    //     dispatch(updateUserData(res.data.loginUser));
-    //   });
-    //   return { ...state };
-    // }
+    //(XˣᴰkurwaˣᴰDˣᴰ)ˣᴰ
     case 'GET_INFO_ABOUT_CURRENT_PARTY': {
       fetch({
         query: `query{

@@ -145,6 +145,24 @@ export const user = dispatch => (
       return { ...state };
     }
 
+    case 'CHECK_IS_USER_LOGGED': {
+      fetch({
+        query: `query{
+          isUserLogined{
+            status
+            username
+          }
+        }`
+      }).then(res => {
+        if (res.data.isUserLogined.status === 'USER_IS_LOGINED') {
+          dispatch(updateUserData(res.data.isUserLogined));
+        } else {
+          history.push('/');
+        }
+      });
+      return { ...state };
+    }
+
     case 'SET_PARTY_ID': {
       state.currentPartyId = value;
       return { ...state };

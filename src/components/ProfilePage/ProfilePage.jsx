@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { changeUserData, getUserInfo } from '../../actions';
+import { changeUserData, getUserInfo, checkIsUserLogged } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -22,6 +22,7 @@ class ProfilePage extends React.Component {
   };
 
   componentDidMount = () => {
+    this.props.checkIsUserLogged(this.props.history);
     this.props.getUserInfo();
   };
 
@@ -344,6 +345,6 @@ class ProfilePage extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = { changeUserData, getUserInfo };
+const mapDispatchToProps = { changeUserData, getUserInfo, checkIsUserLogged };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
