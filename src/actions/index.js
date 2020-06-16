@@ -10,6 +10,12 @@ export const logIn = (email, password, history) => ({
   history
 });
 
+export const errorSignUp = (email, password) => ({
+  type: 'ERROR_SIGN_UP',
+  email,
+  password
+});
+
 export const logOut = () => ({
   type: 'LOG_OUT'
 });
