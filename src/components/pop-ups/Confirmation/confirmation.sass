@@ -1,1 +1,51 @@
 @import '../../sass/_mixins', '../../sass/_variables'
+
+.confirmation
+    position: fixed
+    height: 100vh
+    width: 100vw
+    z-index: 100
+    background: rgba(0, 0, 0, 0.75)
+    backdrop-filter: blur(6px)
+
+.confimation__container
+    display: flex
+    flex-direction: column
+    position: absolute
+    width: 95%
+    max-width: 500px
+    min-height: 25%
+    left: 50vw
+    transform: translateX(-50%)
+    top: calc(50vh - 25%)
+    background: #202426
+    border: 1px solid #FF0000
+    border-radius: 25px
+
+.confirmation__h1
+    height: 46px
+    line-height: 46px
+    text-align: center
+    color: #FF0000
+
+.confirmation__p
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-grow: 1
+    font-size: 20px
+    color: #ffffff
+    
+.confirmation__buttons
+    height: 56px
+    display: flex
+    align-items: center
+    justify-content: space-evenly
+
+.confirmation__button
+    height: 36px
+    width: 90px
+    background: #FF0000
+    border-radius: 50px
+    border: none
+    font-size: 20px
