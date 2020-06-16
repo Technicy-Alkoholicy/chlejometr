@@ -5,24 +5,34 @@ import bcrypt from 'bcrypt';
 
 import User from '../../models/user.js';
 import Party from '../../models/party.js';
+import user from '../../models/user.js';
 
 const responseTemplate = (status, username, email) => ({ status, username, email })
 
 export default (req, res, next) => {
   const { userId, email, username, isLoggined } = req.session
 
-  const userResolver = async ({ username, id }) => {
+  const userResolver = async ({ email, username, id }) => {
     let user
     if (username) {
       user = await User.findOne({ username })
+    } else if (email) {
+      user = await User.findOne({ email })
     } else if (id) {
       user = await User.findOne({ _id: id })
     } else {
       user = await User.findOne({ _id: userId })
     }
 
-    // user.parties.forEach
-    console.log(user);
+    user.parties.forEach((partyId, index) => {
+      user.parties[index] = partyResolver({ partyId })
+    })
+    user.friends.forEach((userId, index) => {
+      user.friends[index] = userResolver({ userId })
+    })
+    user.friendInvitations.forEach((userId, index) => {
+      user.friendInvitations[index] = userResolver({ userId })
+    })
 
     return user
   }
@@ -157,6 +167,33 @@ export default (req, res, next) => {
 
       return true
     },
+    confirmFriendInvitation: async ({ friendUsername }) => {
+      const friend = await User.findOne({ username: friendUsername })
+      const user = await User.findOne({ _id: userId })
+
+      friend.friends.push(userId)
+      user.friends.push(friend._id)
+
+      friend.friendInvitations.pull(userId)
+      user.friendInvitations.pull(friend._id)
+
+      user.save()
+      friend.save()
+
+      return true
+    },
+    removeFriend: async ({ friendUsername }) => {
+      const friend = await User.findOne({ username: friendUsername })
+      const user = await User.findOne({ _id: userId })
+
+      friend.friends.pull(userId)
+      user.friends.pull(friend._id)
+
+      user.save()
+      friend.save()
+
+      return true
+    },
 
     //party
     parties: partiesResolver,
@@ -212,8 +249,13 @@ export default (req, res, next) => {
     },
     leaveParty: async ({ partyId }) => {
       const party = await Party.findOne({ _id: partyId })
-      const memberIndex = party.members.findIndex(member => member === userId)
-      party.members.splice(memberIndex, 1)
+      if (party.members.length === 1) {
+        Party.deleteOne({ _id: partyId })
+      } else {
+        const memberIndex = party.members.findIndex(member => member === userId)
+        party.members.splice(memberIndex, 1)
+      }
+
       await party.save()
 
       const user = await User.findOne({ _id: userId })
