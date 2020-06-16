@@ -96,3 +96,10 @@ export const countAlcoholDrunk = username => ({
   type: 'COUNT_ALOCOHOL_DRUNK',
   username
 });
+
+export const finishParty = (value, history, parties) => ({
+  type: 'FINISH_PARTY',
+  value,
+  history,
+  parties
+});
