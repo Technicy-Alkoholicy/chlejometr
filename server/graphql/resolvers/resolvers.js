@@ -5,7 +5,6 @@ import bcrypt from 'bcrypt';
 
 import User from '../../models/user.js';
 import Party from '../../models/party.js';
-import user from '../../models/user.js';
 
 const responseTemplate = (status, username, email) => ({ status, username, email })
 
