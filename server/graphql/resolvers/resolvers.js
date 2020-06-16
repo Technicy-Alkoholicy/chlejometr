@@ -12,17 +12,56 @@ const responseTemplate = (status, username, email) => ({ status, username, email
 export default (req, res, next) => {
   const { userId, email, username, isLoggined } = req.session
 
-  function newLinkSubscribe(parent, args, context, info) {
-    return context.prisma.$subscribe.link({ mutation_in: ['CREATED'] }).node()
+  const userResolver = async ({ username, id }) => {
+    let user
+    if (username) {
+      user = await User.findOne({ username })
+    } else if (id) {
+      user = await User.findOne({ _id: id })
+    } else {
+      user = await User.findOne({ _id: userId })
+    }
+
+    // user.parties.forEach
+    console.log(user);
+
+    return user
+  }
+
+  const partiesResolver = async () => {
+    if (!isLoggined) return null
+
+    const user = await User.findOne({ _id: userId })
+    return user.parties.map(partyId => {
+      return Party.findOne({ _id: partyId }).then(async res => ({
+        _id: res._id,
+        name: res.name,
+        owner: await User.findOne({ _id: res.owner }),
+        isPartyOver: res.isPartyOver,
+        members: res.members.map(async id => await User.findOne({ _id: id })),
+        membersShots: res.membersShots.map(async memberShots => ({
+          user: await User.findOne({ _id: memberShots.userId }),
+          shots: memberShots.shots
+        }))
+      }))
+    })
+  }
+
+  const partyResolver = async ({ partyId }) => {
+    return Party.findOne({ _id: partyId }).then(async res => ({
+      _id: res._id,
+      name: res.name,
+      owner: await User.findOne({ _id: res.owner }),
+      isPartyOver: res.isPartyOver,
+      members: res.members.map(async id => await User.findOne({ _id: id })),
+      membersShots: res.membersShots.map(async memberShots => ({
+        user: await User.findOne({ _id: memberShots.userId }),
+        shots: memberShots.shots
+      }))
+    }))
   }
 
   return {
-    Subscription: {
-      foo: {
-        subscribe: (_, __, { pubsub }) => 5
-      }
-    },
-
     // register and login
     loginUser: async ({ email, password }) => {
       return User.findOne({ email }).then(async ({ _doc }) => {
@@ -74,21 +113,19 @@ export default (req, res, next) => {
 
       return true
     },
-
+    isUserLogined: () => {
+      if (isLoggined) {
+        return responseTemplate("USER_IS_LOGINED", username, email)
+      } else {
+        return responseTemplate("USER_IS_NOT_LOGINED")
+      }
+    },
     //user
     users: () => {
       return User.find()
         .then(user => user)
     },
-    user: ({ email, id }) => {
-      if (email) {
-        return User.findOne({ email }).then(user => user)
-      } else if (id) {
-        return User.findOne({ _id: id }).then(user => user)
-      } else {
-        return User.findOne({ _id: userId }).then(user => user)
-      }
-    },
+    user: userResolver,
     uppdateUserData: async ({ passwordToChange, email, username, weight, gender, height, age, isPrivate }) => {
       let user = await User.findOne({ _id: userId })
 
@@ -111,38 +148,20 @@ export default (req, res, next) => {
       return true
     },
 
-    //party
-    parties: async () => {
-      if (!isLoggined) return null
+    //friends
+    inviteFriend: async ({ friendUsername }) => {
+      const friend = await User.findOne({ username: friendUsername })
 
-      const user = await User.findOne({ _id: userId })
-      return user.parties.map(partyId => {
-        return Party.findOne({ _id: partyId }).then(async res => ({
-          _id: res._id,
-          name: res.name,
-          owner: await User.findOne({ _id: res.owner }),
-          isPartyOver: res.isPartyOver,
-          members: res.members.map(async id => await User.findOne({ _id: id })),
-          membersShots: res.membersShots.map(async memberShots => ({
-            user: await User.findOne({ _id: memberShots.userId }),
-            shots: memberShots.shots
-          }))
-        }))
-      })
+      friend.friendInvitations = [...friend.friendInvitations, userId]
+      console.log(friend);
+      await friend.save()
+
+      return true
     },
-    party: async ({ partyId }) => {
-      return Party.findOne({ _id: partyId }).then(async res => ({
-        _id: res._id,
-        name: res.name,
-        owner: await User.findOne({ _id: res.owner }),
-        isPartyOver: res.isPartyOver,
-        members: res.members.map(async id => await User.findOne({ _id: id })),
-        membersShots: res.membersShots.map(async memberShots => ({
-          user: await User.findOne({ _id: memberShots.userId }),
-          shots: memberShots.shots
-        }))
-      }))
-    },
+
+    //party
+    parties: partiesResolver,
+    party: partyResolver,
     createParty: async ({ name }) => {
       if (!isLoggined) return null
 

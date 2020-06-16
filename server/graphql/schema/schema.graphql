@@ -7,6 +7,8 @@ schema {
 }
 
 type Query {
+  isUserLogined: LoginResponse
+
   users:[User]
   """ specific user, use email or id """
   user(email:String id: String): User
@@ -36,6 +38,8 @@ type Mutation {
       private: Boolean
     ):Boolean
 
+  inviteFriend(friendUsername:String):Boolean
+
   createParty( name: String! ): Boolean
   joinParty( partyId: String! ): Boolean
   endParty( partyId: String! ): Boolean
@@ -61,6 +65,7 @@ type User {
   isPrivate: Boolean
   parties: [Party]
   friends: [User]
+  friendInvitations: [User]
 }
 
 """ party """
