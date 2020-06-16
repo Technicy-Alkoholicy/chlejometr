@@ -39,6 +39,8 @@ type Mutation {
     ):Boolean
 
   inviteFriend(friendUsername:String):Boolean
+  confirmFriendInvitation(friendUsername:String):Boolean
+  removeFriend(friendUsername:String):Boolean
 
   createParty( name: String! ): Boolean
   joinParty( partyId: String! ): Boolean
