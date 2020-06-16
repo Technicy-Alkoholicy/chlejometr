@@ -10,6 +10,12 @@ export const logIn = (email, password, history) => ({
   history
 });
 
+export const errorSignUp = (email, password) => ({
+  type: 'ERROR_SIGN_UP',
+  email,
+  password
+});
+
 export const logOut = () => ({
   type: 'LOG_OUT'
 });
@@ -58,6 +64,11 @@ export const createParty = value => ({
 export const setPartyId = value => ({
   type: 'SET_PARTY_ID',
   value
+});
+
+export const checkIsUserLogged = history => ({
+  type: 'CHECK_IS_USER_LOGGED',
+  history
 });
 
 //------------------------------------------party.js-----------------------------------------------------------

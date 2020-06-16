@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getInfoAboutCurrentParty, updateShotData } from '../../actions';
+import { getInfoAboutCurrentParty, updateShotData, checkIsUserLogged } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -15,11 +15,20 @@ class MainPage extends React.Component {
     milliliters: { value: '', isActive: false },
     shotsCounter: 0,
     alcoholDrunk: 0,
-    isNextShotReady: true
+    isNextShotReady: true,
+    isDataFetched: false
   };
 
   componentDidMount() {
-    this.props.getInfoAboutCurrentParty(this.props.user.currentPartyId, this.props.user.username);
+    this.props.checkIsUserLogged(this.props.history);
+  }
+
+  componentDidUpdate() {
+    if (!this.state.isDataFetched && this.props.user.username) {
+      if (!this.props.user.currentPartyId) this.props.history.push('/home');
+      this.props.getInfoAboutCurrentParty(this.props.user.currentPartyId, this.props.user.username);
+      this.setState({ isDataFetched: true });
+    }
   }
 
   isActiveToggle = type => {
@@ -202,6 +211,6 @@ class MainPage extends React.Component {
 }
 
 const mapStateToProps = ({ party, user }) => ({ party, user });
-const mapDispatchToProps = { getInfoAboutCurrentParty, updateShotData };
+const mapDispatchToProps = { getInfoAboutCurrentParty, updateShotData, checkIsUserLogged };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

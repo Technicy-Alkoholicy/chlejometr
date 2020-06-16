@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-// import {  } from '../../actions';
+import { checkIsUserLogged } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -20,6 +20,10 @@ class SummaryPage extends React.Component {
       { name: 'Duk', numOfShots: 9, numOfml: 2135 },
       { name: 'Cipson', numOfShots: 1, numOfml: 10 }
     ]
+  };
+
+  componentDidMount = () => {
+    this.props.checkIsUserLogged(this.props.history);
   };
 
   render() {
@@ -99,7 +103,7 @@ class SummaryPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ gameData }) => ({ gameData });
-const mapDispatchToProps = {};
+const mapStateToProps = ({ user }) => ({ user });
+const mapDispatchToProps = { checkIsUserLogged };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SummaryPage);

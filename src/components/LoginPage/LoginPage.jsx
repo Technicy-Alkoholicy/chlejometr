@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
-import { logIn, signUp } from '../../actions';
+import { logIn, signUp, wrongLoginData, errorSignUp } from '../../actions';
 
 import beerLogo from '../../img/beerGlass.png';
 import vodkaLogo from '../../img/vodkaShot.png';
@@ -85,7 +85,9 @@ class LoginPage extends React.Component {
               <button
                 className="loginPage__loginButton"
                 onClick={() => {
-                  this.props.logIn(email, password, this.props.history);
+                  if (RegExp('.@.').test(email) && password.length > 5)
+                    this.props.logIn(email, password, this.props.history);
+                  else this.props.wrongLoginData();
                 }}
               >
                 Log In
@@ -128,14 +130,16 @@ class LoginPage extends React.Component {
               <button
                 className="loginPage__signupButton"
                 onClick={() => {
-                  this.props.signUp(username, email, password, this.props.history);
+                  if (username.length > 3 && password.length > 5 && RegExp('.@.').test(email))
+                    this.props.signUp(username, email, password, this.props.history);
+                  else this.props.errorSignUp(email, password);
                 }}
               >
                 Sign Up
               </button>
             </div>
           </div>
-          <p className="loginPage__error">{this.props.user.signUpError}</p>
+          <p className="loginPage__error">{this.props.user.signUpTextError}</p>
         </div>
       </>
     );
@@ -143,6 +147,6 @@ class LoginPage extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = { logIn, signUp };
+const mapDispatchToProps = { logIn, signUp, wrongLoginData, errorSignUp };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

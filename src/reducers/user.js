@@ -70,13 +70,21 @@ export const user = dispatch => (
       return { ...state };
     }
 
+    case 'ERROR_SIGN_UP': {
+      if (!RegExp('.@.').test(email)) state.signUpTextError = 'Please enter a valid e-mail';
+      else if (password.length < 6)
+        state.signUpTextError = 'Password must have at least 6 characters';
+      else state.signUpTextError = 'Username must have at least 4 characters';
+      return { ...state };
+    }
+
     case 'WRONG_SIGN_UP_DATA': {
       if (status === 'EMAIL_IS_ENGAGED') {
-        state.signUpError = 'This email is already in use.';
+        state.signUpTextError = 'This email is already in use.';
       } else if (status === 'USERNAME_IS_ENGAGED') {
-        state.signUpError = 'This username is already in use.';
+        state.signUpTextError = 'This username is already in use.';
       } else {
-        state.signUpError = 'Username and email are already in use.';
+        state.signUpTextError = 'Username and email are already in use.';
       }
       return { ...state };
     }
@@ -141,6 +149,24 @@ export const user = dispatch => (
         query: `mutation{
           createParty(name:"${value}")
         }`
+      });
+      return { ...state };
+    }
+
+    case 'CHECK_IS_USER_LOGGED': {
+      fetch({
+        query: `query{
+          isUserLogined{
+            status
+            username
+          }
+        }`
+      }).then(res => {
+        if (res.data.isUserLogined.status === 'USER_IS_LOGINED') {
+          dispatch(updateUserData(res.data.isUserLogined));
+        } else {
+          history.push('/');
+        }
       });
       return { ...state };
     }
