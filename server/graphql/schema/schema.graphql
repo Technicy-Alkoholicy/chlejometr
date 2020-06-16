@@ -11,7 +11,7 @@ type Query {
 
   users:[User]
   """ specific user, use email or id """
-  user(email:String id: String): User
+  user(username:String email: String id: String): User
 
   """ all users parties """
   parties: [Party]

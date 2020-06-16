@@ -5,24 +5,34 @@ import bcrypt from 'bcrypt';
 
 import User from '../../models/user.js';
 import Party from '../../models/party.js';
+import user from '../../models/user.js';
 
 const responseTemplate = (status, username, email) => ({ status, username, email })
 
 export default (req, res, next) => {
   const { userId, email, username, isLoggined } = req.session
 
-  const userResolver = async ({ username, id }) => {
+  const userResolver = async ({ email, username, id }) => {
     let user
     if (username) {
       user = await User.findOne({ username })
+    } else if (email) {
+      user = await User.findOne({ email })
     } else if (id) {
       user = await User.findOne({ _id: id })
     } else {
       user = await User.findOne({ _id: userId })
     }
 
-    // user.parties.forEach
-    console.log(user);
+    user.parties.forEach((partyId, index) => {
+      user.parties[index] = partyResolver({ partyId })
+    })
+    user.friends.forEach((userId, index) => {
+      user.friends[index] = userResolver({ userId })
+    })
+    user.friendInvitations.forEach((userId, index) => {
+      user.friendInvitations[index] = userResolver({ userId })
+    })
 
     return user
   }
