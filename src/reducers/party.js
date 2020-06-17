@@ -92,6 +92,25 @@ export const party = dispatch => (
       return { ...state };
     }
 
+    case 'LEAVE_PARTY': {
+      fetch({
+        query: `mutation{
+          leaveParty(partyId:"${value}")
+        }`
+      }).then(() => {
+        console.log(parties[parties.findIndex(party => party._id === value)]);
+
+        parties.splice(
+          parties.findIndex(party => party._id === value),
+          1
+        );
+        history.push('/home');
+        dispatch(updateUserData(state));
+      });
+
+      return { ...state };
+    }
+
     default:
       return state;
   }

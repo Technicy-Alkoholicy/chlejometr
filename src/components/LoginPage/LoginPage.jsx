@@ -12,8 +12,8 @@ import './LoginPage.sass';
 class LoginPage extends React.Component {
   state = {
     username: '',
-    password: '123',
-    email: 'Qler',
+    password: '',
+    email: '',
     isActive: false
   };
 
@@ -85,9 +85,9 @@ class LoginPage extends React.Component {
               <button
                 className="loginPage__loginButton"
                 onClick={() => {
-                  // if (RegExp('.@.').test(email) && password.length > 5)
-                  this.props.logIn(email, password, this.props.history);
-                  // else this.props.wrongLoginData();
+                  if (RegExp('.@.').test(email) && password.length > 5)
+                    this.props.logIn(email, password, this.props.history);
+                  else this.props.wrongLoginData();
                 }}
               >
                 Log In

@@ -3,21 +3,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-// import {  } from '../../actions';
+import { checkIsUserLogged, getUserInfo } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
 import './friendsPage.sass';
 
 class FriendsPage extends React.Component {
-  state = {
-    friends: [{ name: 'Qler' }, { name: 'Lipa' }],
-    requestsFriends: [{ name: 'Qler' }, { name: 'Lipa' }]
-  };
+  state = {};
 
-  //   componentDidMount = () => {
-  //     this.props.getUserInfo();
-  //   };
+  componentDidMount = () => {
+    this.props.checkIsUserLogged(this.props.history);
+    if (!this.props.user.friends) this.props.getUserInfo();
+  };
 
   //   componentDidUpdate() {
   //     if (this.props.user.email && !this.state.isDataFetched) {
@@ -51,7 +49,6 @@ class FriendsPage extends React.Component {
   //   };
 
   render() {
-    const { friends, requestsFriends } = this.state;
     return (
       <>
         <div className="friendsPage">
@@ -60,22 +57,24 @@ class FriendsPage extends React.Component {
           <section className="friendsPage__section">
             <h2 className="friendsPage__h2">Friends</h2>
 
-            {friends.map(friend => (
-              <div className="friendsPage__friend">
-                <button
-                  className="friendsPage__btn"
-                  // onClick={() => {
-                  //   this.delParty(party.id);
-                  // }}
-                >
-                  <i className="fas fa-times friendsPage__icon"></i>
-                </button>
-                <p className="friendsPage__p">{friend.name}</p>
-                <button className="friendsPage__btn">
-                  <i className="fas fa-arrow-right friendsPage__icon"></i>
-                </button>
-              </div>
-            ))}
+            {this.props.user.friends
+              ? this.props.user.friends.map(friend => (
+                  <div className="friendsPage__friend">
+                    <button
+                      className="friendsPage__btn"
+                      // onClick={() => {
+                      //   this.delParty(party.id);
+                      // }}
+                    >
+                      <i className="fas fa-times friendsPage__icon"></i>
+                    </button>
+                    <p className="friendsPage__p">{friend.username}</p>
+                    <button className="friendsPage__btn">
+                      <i className="fas fa-arrow-right friendsPage__icon"></i>
+                    </button>
+                  </div>
+                ))
+              : ''}
 
             <button className="friendsPage__btn friendsPage__addBtn">
               <i className="fas fa-plus friendsPage__icon"></i>
@@ -85,22 +84,24 @@ class FriendsPage extends React.Component {
           <section className="friendsPage__section">
             <h2 className="friendsPage__h2">Friend Requests</h2>
 
-            {requestsFriends.map(friend => (
-              <div className="friendsPage__friend">
-                <button
-                  className="friendsPage__btn"
-                  // onClick={() => {
-                  //   this.delParty(party.id);
-                  // }}
-                >
-                  <i className="fas fa-times friendsPage__icon"></i>
-                </button>
-                <p className="friendsPage__p">{friend.name}</p>
-                <button className="friendsPage__btn">
-                  <i className="fas fa-check friendsPage__icon"></i>
-                </button>
-              </div>
-            ))}
+            {this.props.user.friendInvitations
+              ? this.props.user.friendInvitations.map(friend => (
+                  <div className="friendsPage__friend">
+                    <button
+                      className="friendsPage__btn"
+                      // onClick={() => {
+                      //   this.delParty(party.id);
+                      // }}
+                    >
+                      <i className="fas fa-times friendsPage__icon"></i>
+                    </button>
+                    <p className="friendsPage__p">{friend.username}</p>
+                    <button className="friendsPage__btn">
+                      <i className="fas fa-check friendsPage__icon"></i>
+                    </button>
+                  </div>
+                ))
+              : ''}
           </section>
         </div>
       </>
@@ -109,6 +110,6 @@ class FriendsPage extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = {};
+const mapDispatchToProps = { checkIsUserLogged, getUserInfo };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendsPage);
