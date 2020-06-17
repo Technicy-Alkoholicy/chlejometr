@@ -103,3 +103,10 @@ export const finishParty = (value, history, parties) => ({
   history,
   parties
 });
+
+export const leaveParty = (value, history, parties) => ({
+  type: 'LEAVE_PARTY',
+  value,
+  history,
+  parties
+});
