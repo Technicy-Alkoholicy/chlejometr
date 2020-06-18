@@ -14,6 +14,7 @@ import HomePage from './components/HomePage/HomePage.jsx';
 import SummaryPage from './components/SummaryPage/SummaryPage.jsx';
 import FriendsPage from './components/FriendsPage/FriendsPage.jsx';
 import FriendSearch from './components/pop-ups/FriendSearch/FriendSearch.jsx';
+import FriendInvite from './components/pop-ups/InviteToParty/InviteToParty.jsx';
 
 import './style.sass';
 
@@ -23,6 +24,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <Route exact path="/search" component={FriendSearch} />
+        <Route exact path="/invite" component={FriendInvite} />
         {/* <Route exact path="/" component={StartPage} /> */}
         <Route path="/profile" component={ProfilePage} />
         <Route path="/main" component={MainPage} />
