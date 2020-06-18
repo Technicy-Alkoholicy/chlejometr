@@ -27,11 +27,11 @@ export default (req, res, next) => {
     user.parties.forEach((partyId, index) => {
       user.parties[index] = partyResolver({ partyId })
     })
-    user.friends.forEach((userId, index) => {
-      user.friends[index] = userResolver({ userId })
+    user.friends.forEach((id, index) => {
+      user.friends[index] = userResolver({ id })
     })
-    user.friendInvitations.forEach((userId, index) => {
-      user.friendInvitations[index] = userResolver({ userId })
+    user.friendInvitations.forEach((id, index) => {
+      user.friendInvitations[index] = userResolver({ id })
     })
 
     return user
