@@ -48,7 +48,12 @@ export const party = dispatch => (
         }`
       }).then(res => {
         dispatch(updatePartyData(res.data.party));
-        dispatch(countAlcoholDrunk(username, weight, gender));
+        if (
+          res.data.party.membersShots[
+            res.data.party.membersShots.findIndex(member => member.user.username === username)
+          ].shots.length > 0
+        )
+          dispatch(countAlcoholDrunk(username, weight, gender));
       });
       state.currentPartyId = value;
       return { ...state };
@@ -84,7 +89,9 @@ export const party = dispatch => (
         [...member.shots[member.shots.length - 1].date].splice(14, 2).join('') * 1;
 
       let time = 0;
-      if (dateOfFirstShot === dateOfLastShot) {
+      if (hourOfFirstShot === hourOfLastShot && minOfFirstShot === minOfLastShot) {
+        time = 1;
+      } else if (dateOfFirstShot === dateOfLastShot) {
         const hours = hourOfLastShot - hourOfFirstShot;
         const min = minOfLastShot - minOfFirstShot;
         time = Math.round((hours + min / 60) * 10) / 10;
@@ -94,8 +101,9 @@ export const party = dispatch => (
         time = Math.round((hours + min / 60) * 10) / 10;
       }
 
+      if (time < 1) time = 1;
+
       const etanol = (alcoholDrunk * (789 / 1000)) / 10;
-      console.log(etanol, weight);
 
       let alcoholInBood = 0;
       if (gender === 'male')

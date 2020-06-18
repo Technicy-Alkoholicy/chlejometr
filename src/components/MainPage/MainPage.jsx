@@ -73,20 +73,14 @@ class MainPage extends React.Component {
         this.props.party.currentPartyId,
         state.milliliters.value,
         state.percent.value,
-        this.props.user.username
+        this.props.user.username,
+        70,
+        'male'
       );
 
       this.setState(state);
     }
   };
-
-  // convertDateFormat = dateString => {
-  //   if (dateString) {
-  //     const date = new Date(dateString);
-  //     return `${date.getDate()}.${date.getMonth() + 1}.${date.getYear() +
-  //       1900} ${dateString.getHours()} ${dateString.getMinutes()}`;
-  //   }
-  // };
 
   render() {
     const { percent, milliliters, shotsCounter, alcoholDrunk } = this.state;
@@ -196,7 +190,6 @@ class MainPage extends React.Component {
                 70,
                 'male'
               );
-              console.log('onClick');
             }}
           ></button>
 

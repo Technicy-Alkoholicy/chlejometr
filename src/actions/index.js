@@ -86,12 +86,14 @@ export const updatePartyData = data => ({
   data
 });
 
-export const updateShotData = (value, mlValue, percentValue, username) => ({
+export const updateShotData = (value, mlValue, percentValue, username, weight, gender) => ({
   type: 'UPDATE_SHOT_DATA',
   value,
   mlValue,
   percentValue,
-  username
+  username,
+  weight,
+  gender
 });
 
 export const countAlcoholDrunk = (username, weight, gender) => ({
