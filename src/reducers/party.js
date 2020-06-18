@@ -26,6 +26,10 @@ export const party = dispatch => (
         query: `query{
           party(partyId:"${value}"){
             name
+            createdDate
+            startedDate
+            finishedDate
+
             owner{
               username
             }

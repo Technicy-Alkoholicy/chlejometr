@@ -13,7 +13,10 @@ export const partySchema = new Schema(
         userId: mongoose.Types.ObjectId,
         shots: [{ percent: Number, size: Number, date: Date }]
       }
-    ]
+    ],
+    createdDate: Date,
+    startedDate: Date,
+    finishedDate: Date
   },
   { collection: 'parties' }
 );

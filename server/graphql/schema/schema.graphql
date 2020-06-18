@@ -78,6 +78,9 @@ type Party {
   isPartyOver: Boolean
   members: [User]
   membersShots: [MembersShots]
+  createdDate: Date
+  startedDate:Date
+  finishedDate:Date
 }
 
 """ Shots drinked by specific user """

@@ -12,7 +12,7 @@ import './summaryPage.sass';
 class SummaryPage extends React.Component {
   state = {
     isHost: true,
-    partyCreated: '13.06.2020',
+    partyCreated: null,
     partyStart: '04.11.2020',
     partyFinished: '---',
     participants: [
@@ -24,11 +24,13 @@ class SummaryPage extends React.Component {
 
   componentDidMount = () => {
     this.props.checkIsUserLogged(this.props.history);
-    console.log(
-      this.props.user.parties[
-        this.props.user.parties.findIndex(party => party._id === this.props.user.currentPartyId)
-      ]
-    );
+  };
+
+  convertDateFormat = dateString => {
+    if (dateString) {
+      const date = new Date(dateString);
+      return `${date.getDate()}.${date.getMonth() + 1}.${date.getYear() + 1900}`;
+    }
   };
 
   render() {
@@ -44,19 +46,25 @@ class SummaryPage extends React.Component {
             <div className="summaryPage__sectionMain">
               <div className="summaryPage__row">
                 <p className="summaryPage__p">Created</p>
-                <p className="summaryPage__p">{partyCreated}</p>
+                <p className="summaryPage__p">
+                  {this.convertDateFormat(this.props.party.createdDate)}
+                </p>
               </div>
               <div className="summaryPage__row">
                 <p className="summaryPage__p">Start</p>
-                <p className="summaryPage__p">{partyStart}</p>
+                <p className="summaryPage__p">
+                  {this.convertDateFormat(this.props.party.startedDate)}
+                </p>
               </div>
               <div className="summaryPage__row">
                 <p className="summaryPage__p">Finished</p>
-                <p className="summaryPage__p">{partyFinished}</p>
+                <p className="summaryPage__p">
+                  {this.convertDateFormat(this.props.party.finishedDate) || '---'}
+                </p>
               </div>
               <div className="summaryPage__row">
                 <p className="summaryPage__p">Participants</p>
-                <p className="summaryPage__p">{participants.length}</p>
+                <p className="summaryPage__p">{this.props.party?.membersShots?.length}</p>
               </div>
             </div>
           </section>
