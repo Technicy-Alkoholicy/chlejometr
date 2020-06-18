@@ -2,7 +2,8 @@ import {
   updatePartyData,
   getInfoAboutCurrentParty,
   countAlcoholDrunk,
-  getInfoAboutParties
+  getInfoAboutParties,
+  updateUserData
 } from '../actions/index.js';
 
 const { createApolloFetch } = require('apollo-fetch');
@@ -16,7 +17,7 @@ export const party = dispatch => (
     alcoholDrunk: 0,
     isDataNeedUpdate: false
   },
-  { type, value, data, mlValue, percentValue, username, history }
+  { type, value, data, mlValue, percentValue, username, history, parties }
 ) => {
   switch (type) {
     //(XˣᴰkurwaˣᴰDˣᴰ)ˣᴰ
@@ -76,6 +77,39 @@ export const party = dispatch => (
         }`
       }).then(() => {
         dispatch(getInfoAboutCurrentParty(value, username));
+      });
+
+      return { ...state };
+    }
+
+    case 'FINISH_PARTY': {
+      fetch({
+        query: `mutation{
+          endParty(partyId:"${value}")
+        }`
+      }).then(() => {
+        parties[parties.findIndex(party => party._id === value)].isPartyOver = true;
+        dispatch(updateUserData(state));
+        history.push('/home');
+      });
+
+      return { ...state };
+    }
+
+    case 'LEAVE_PARTY': {
+      fetch({
+        query: `mutation{
+          leaveParty(partyId:"${value}")
+        }`
+      }).then(() => {
+        console.log(parties[parties.findIndex(party => party._id === value)]);
+
+        parties.splice(
+          parties.findIndex(party => party._id === value),
+          1
+        );
+        history.push('/home');
+        dispatch(updateUserData(state));
       });
 
       return { ...state };

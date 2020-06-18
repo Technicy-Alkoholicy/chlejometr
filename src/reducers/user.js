@@ -113,14 +113,22 @@ export const user = dispatch => (
 
     case 'GET_USER_INFO': {
       fetch({
-        query: `query {
+        query: `query{
           user(email:"${state.email}"){
-            email,
-            username,
-            weight,
-            gender,
-            height,
-            age,
+            _id
+            email
+            username
+            weight
+            gender
+            height
+            age
+            isPrivate
+            friends{
+              username
+            }
+            friendInvitations{
+              username
+            }
           }
         }`
       }).then(res => {

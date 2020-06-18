@@ -15,7 +15,7 @@ class Confirmation extends React.Component {
     return (
       <>
         <div className="confirmation">
-          <div className="confimation__container">
+          <div className="confirmation__container">
             <h1 className="confirmation__h1">Confirmation</h1>
             <p className="confirmation__p">Are you sure you want to...</p>
             <div className="confirmation__buttons">

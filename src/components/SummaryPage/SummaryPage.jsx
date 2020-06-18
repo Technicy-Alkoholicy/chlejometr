@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { checkIsUserLogged } from '../../actions';
+import { checkIsUserLogged, finishParty } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -100,7 +100,18 @@ class SummaryPage extends React.Component {
             </section>
           )}
           {isHost ? (
-            <button className="summaryPage__btn">Finish party</button>
+            <button
+              className="summaryPage__btn"
+              onClick={() => {
+                this.props.finishParty(
+                  this.props.user.currentPartyId,
+                  this.props.history,
+                  this.props.user.parties
+                );
+              }}
+            >
+              Finish party
+            </button>
           ) : (
               <button className="summaryPage__btn">Leave party</button>
             )}
@@ -111,6 +122,6 @@ class SummaryPage extends React.Component {
 }
 
 const mapStateToProps = ({ user, party }) => ({ user, party });
-const mapDispatchToProps = { checkIsUserLogged };
+const mapDispatchToProps = { checkIsUserLogged, finishParty };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SummaryPage);

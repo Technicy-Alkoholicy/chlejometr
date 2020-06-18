@@ -1,1 +1,72 @@
 @import '../../sass/_mixins', '../../sass/_variables'
+
+.partyCreate
+    position: fixed
+    height: 100vh
+    width: 100vw
+    z-index: 100
+    background: rgba(0, 0, 0, 0.75)
+    backdrop-filter: blur(6px)
+
+.partyCreate__container
+    display: flex
+    flex-direction: column
+    position: absolute
+    align-items: center
+    width: 95%
+    max-width: 500px
+    min-height: 25%
+    left: 50vw
+    transform: translateX(-50%)
+    top: calc(50vh - 25%)
+    background: #202426
+    border: 1px solid #D05814
+    border-radius: 25px
+
+.partyCreate__h1
+    height: 46px
+    line-height: 46px
+    text-align: center
+    color: #D05814
+
+.partyCreate__inputContainer
+    height: 72px
+    width: 88%
+    margin-bottom: 10px
+
+.partyCreate__p
+    height: 36px
+    line-height: 36px
+    display: flex
+    align-items: center
+    flex-grow: 1
+    font-size: 24px
+    color: #ffffff
+
+.partyCreate__input
+    height: 36px
+    width: 100%
+    background-color: #C4C4C4
+    border: 1px solid #D05814
+    border-radius: 18px
+    text-align: center
+    font-size: 20px
+    
+.partyCreate__input::-webkit-calendar-picker-indicator
+    position: absolute
+    right: 10%
+
+.partyCreate__buttons
+    height: 56px
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: space-evenly
+
+.partyCreate__button
+    height: 36px
+    width: 90px
+    background: #D05814
+    border-radius: 50px
+    border: none
+    font-size: 20px

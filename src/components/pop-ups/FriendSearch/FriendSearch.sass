@@ -1,0 +1,85 @@
+@import "../../sass/_mixins.sass"
+
+.friendSearch
+    position: absolute
+    display: flex
+    flex-direction: column
+    justify-content: space-evenly
+    align-items: center
+    top: 14vh
+    left: 3vw
+    height: 76vh
+    width: 94vw
+    background-color: #202426
+    border: 1px solid #9B39BD
+    border-radius: 25px
+    &__titleContainer
+        display: flex
+        justify-content: center
+        align-items: center
+        height: 11%
+        width: 100%
+    &__title
+        width: 100%
+        height: 100%
+        line-height: 1em
+        text-align: center
+        font-size: 32px
+        color: #9B39BD
+    &__searchInputContainer
+        height: 15%
+        width: 90%
+    &__searchInputTitleContainer
+        display: flex
+        align-items: center
+    &__searchInputTitle
+        color: white
+        font-size: 24px
+    &__searchInput
+        +roundedSection(#9B39BD, 100%)
+    &__searchResults
+        height: 60%
+        width: 90%
+        &Container
+            overflow-y: scroll
+            overflow-x: hidden
+            height: 90%
+    &__searchResultsTitleContainer
+        display: flex
+        align-items: center
+        height: 10%
+    &__searchResultsTitle
+        color: white
+        font-size: 24px
+    &__searchResultsList
+        list-style: none
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+    &__searchResult
+        +roundedSection(#9B39BD, 100%)
+        +center()
+        margin: 9px 0
+        transition: .3s
+        &__Nickname
+            font-size: 20px
+            pointer-events: none
+        &--selected
+            background-color: #9B39BD
+    &__buttons
+        display: flex
+        justify-content: space-evenly
+        align-items: center
+        height: 10%
+        width: 100%
+    &__inviteButton
+        +roundedSection(#9B39BD, 30%)
+        background-color: #9B39BD
+        font-size: 20px
+        transition: .3s
+        &--unactive
+            background-color: #361442
+            border-color: #361442
+    &__exitButton
+        +roundedSection(#9B39BD, 25%)
+        background-color: #9B39BD
