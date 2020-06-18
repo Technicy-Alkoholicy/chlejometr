@@ -26,7 +26,7 @@ type Mutation {
   loginUser(email: String! password: String!): LoginResponse
   logOut: Boolean
 
-  uppdateUserData(
+  updateUserData(
       passwordToCheck: String
       password: String
       email: String
