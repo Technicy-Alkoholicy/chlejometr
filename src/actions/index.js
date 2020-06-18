@@ -73,10 +73,12 @@ export const checkIsUserLogged = history => ({
 
 //------------------------------------------party.js-----------------------------------------------------------
 
-export const getInfoAboutCurrentParty = (value, username) => ({
+export const getInfoAboutCurrentParty = (value, username, weight, gender) => ({
   type: 'GET_INFO_ABOUT_CURRENT_PARTY',
   value,
-  username
+  username,
+  weight,
+  gender
 });
 
 export const updatePartyData = data => ({
@@ -92,9 +94,11 @@ export const updateShotData = (value, mlValue, percentValue, username) => ({
   username
 });
 
-export const countAlcoholDrunk = username => ({
+export const countAlcoholDrunk = (username, weight, gender) => ({
   type: 'COUNT_ALOCOHOL_DRUNK',
-  username
+  username,
+  weight,
+  gender
 });
 
 export const finishParty = (value, history, parties) => ({

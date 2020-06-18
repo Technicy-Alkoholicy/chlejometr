@@ -11,8 +11,8 @@ import './mainPage.sass';
 
 class MainPage extends React.Component {
   state = {
-    percent: { value: '', isActive: false },
-    milliliters: { value: '', isActive: false },
+    percent: { value: '40', isActive: false },
+    milliliters: { value: '50', isActive: false },
     shotsCounter: 0,
     alcoholDrunk: 0,
     isNextShotReady: true,
@@ -21,17 +21,19 @@ class MainPage extends React.Component {
 
   componentDidMount() {
     this.props.checkIsUserLogged(this.props.history);
-    console.log(
-      this.props.user.parties[
-        this.props.user.parties.findIndex(party => party._id === this.props.user.currentPartyId)
-      ]
-    );
+    if (!this.props.user.currentPartyId) this.props.history.push('/home');
   }
 
   componentDidUpdate() {
     if (!this.state.isDataFetched && this.props.user.username) {
       if (!this.props.user.currentPartyId) this.props.history.push('/home');
-      this.props.getInfoAboutCurrentParty(this.props.user.currentPartyId, this.props.user.username);
+      this.props.getInfoAboutCurrentParty(
+        this.props.user.currentPartyId,
+        this.props.user.username,
+        70,
+        'male'
+      );
+
       this.setState({ isDataFetched: true });
     }
   }
@@ -77,6 +79,14 @@ class MainPage extends React.Component {
       this.setState(state);
     }
   };
+
+  // convertDateFormat = dateString => {
+  //   if (dateString) {
+  //     const date = new Date(dateString);
+  //     return `${date.getDate()}.${date.getMonth() + 1}.${date.getYear() +
+  //       1900} ${dateString.getHours()} ${dateString.getMinutes()}`;
+  //   }
+  // };
 
   render() {
     const { percent, milliliters, shotsCounter, alcoholDrunk } = this.state;
@@ -180,6 +190,13 @@ class MainPage extends React.Component {
                 ].isPartyOver
               )
                 this.nextShot();
+              this.props.getInfoAboutCurrentParty(
+                this.props.user.currentPartyId,
+                this.props.user.username,
+                70,
+                'male'
+              );
+              console.log('onClick');
             }}
           ></button>
 
@@ -208,11 +225,11 @@ class MainPage extends React.Component {
               </div>
               <div className="mainPage__row">
                 <p className="mainPage__bottomSectionP">Alcohol in blood</p>
-                <p className="mainPage__bottomSectionP">?‰</p>
+                <p className="mainPage__bottomSectionP">{`${this.props.party.alcoholInBood}‰`}</p>
               </div>
               <div className="mainPage__row">
                 <p className="mainPage__bottomSectionP">Time to sober</p>
-                <p className="mainPage__bottomSectionP">~6h</p>
+                <p className="mainPage__bottomSectionP">{`~${this.props.party.timeToSober}h`}</p>
               </div>
             </div>
           </section>

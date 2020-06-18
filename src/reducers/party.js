@@ -2,7 +2,6 @@ import {
   updatePartyData,
   getInfoAboutCurrentParty,
   countAlcoholDrunk,
-  getInfoAboutParties,
   updateUserData
 } from '../actions/index.js';
 
@@ -15,9 +14,11 @@ const fetch = createApolloFetch({
 export const party = dispatch => (
   state = {
     alcoholDrunk: 0,
+    alcoholInBood: 0,
+    timeToSober: 0,
     isDataNeedUpdate: false
   },
-  { type, value, data, mlValue, percentValue, username, history, parties }
+  { type, value, data, mlValue, percentValue, username, history, parties, weight, gender }
 ) => {
   switch (type) {
     //(XˣᴰkurwaˣᴰDˣᴰ)ˣᴰ
@@ -47,21 +48,66 @@ export const party = dispatch => (
         }`
       }).then(res => {
         dispatch(updatePartyData(res.data.party));
-        dispatch(countAlcoholDrunk(username));
+        dispatch(countAlcoholDrunk(username, weight, gender));
       });
       state.currentPartyId = value;
       return { ...state };
     }
 
     case 'COUNT_ALOCOHOL_DRUNK': {
-      state.alcoholDrunk = 0;
+      let alcoholDrunk = 0;
 
+      //counting drunk etanol
       state.membersShots[
         state.membersShots.findIndex(member => member.user.username === username)
       ].shots.forEach(shot => {
-        state.alcoholDrunk += (shot.percent * shot.size) / 100;
+        alcoholDrunk += (shot.percent * shot.size) / 100;
       });
-      state.alcoholDrunk = Math.floor(state.alcoholDrunk);
+      alcoholDrunk = Math.floor(alcoholDrunk);
+
+      state.alcoholDrunk = alcoholDrunk;
+
+      //counting alcohol in blood
+      const member =
+        state.membersShots[
+          state.membersShots.findIndex(member => member.user.username === username)
+        ];
+
+      const dateOfFirstShot = [...member.shots[0].date].splice(0, 10).join('') * 1;
+      const dateOfLastShot =
+        [...member.shots[member.shots.length - 1].date].splice(0, 10).join('') * 1;
+      const hourOfFirstShot = [...member.shots[0].date].splice(11, 2).join('') * 1;
+      const hourOfLastShot =
+        [...member.shots[member.shots.length - 1].date].splice(11, 2).join('') * 1;
+      const minOfFirstShot = [...member.shots[0].date].splice(14, 2).join('') * 1;
+      const minOfLastShot =
+        [...member.shots[member.shots.length - 1].date].splice(14, 2).join('') * 1;
+
+      let time = 0;
+      if (dateOfFirstShot === dateOfLastShot) {
+        const hours = hourOfLastShot - hourOfFirstShot;
+        const min = minOfLastShot - minOfFirstShot;
+        time = Math.round((hours + min / 60) * 10) / 10;
+      } else {
+        const hours = 24 - hourOfFirstShot + hourOfLastShot;
+        const min = minOfLastShot - minOfFirstShot;
+        time = Math.round((hours + min / 60) * 10) / 10;
+      }
+
+      const etanol = (alcoholDrunk * (789 / 1000)) / 10;
+      console.log(etanol, weight);
+
+      let alcoholInBood = 0;
+      if (gender === 'male')
+        alcoholInBood =
+          Math.round(((0.806 * etanol * 1.2) / (0.58 * weight) - 0.015 * time) * 10 * 100) / 100;
+      else if (gender === 'female')
+        alcoholInBood =
+          Math.round(((0.806 * etanol * 1.2) / (0.49 * weight) - 0.017 * time) * 10 * 100) / 100;
+      state.alcoholInBood = alcoholInBood;
+
+      //counting time to sober
+      state.timeToSober = 1 + Math.round(((alcoholInBood * (40 / 0.1)) / 60) * 10) / 10;
 
       return { ...state };
     }
@@ -76,7 +122,7 @@ export const party = dispatch => (
           addShot(partyId:"${value}" size:${mlValue} percent: ${percentValue})
         }`
       }).then(() => {
-        dispatch(getInfoAboutCurrentParty(value, username));
+        dispatch(getInfoAboutCurrentParty(value, username, weight, gender));
       });
 
       return { ...state };
