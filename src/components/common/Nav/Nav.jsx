@@ -101,13 +101,13 @@ class Nav extends React.Component {
           <>
             <ul className="nav__ul">
               <li className="nav__li">
-                <Link className="nav__a nav__a--FriendsPage" to={`/home`}>
-                  Home
+                <Link className="nav__a nav__a--FriendsPage" to={`/profile`}>
+                  Profile
                 </Link>
               </li>
               <li className="nav__li">
-                <Link className="nav__a nav__a--FriendsPage" to={`/main`}>
-                  DRINK UP!
+                <Link className="nav__a nav__a--FriendsPage" to={`/home`}>
+                  Home
                 </Link>
               </li>
             </ul>
