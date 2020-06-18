@@ -77,15 +77,20 @@ class SummaryPage extends React.Component {
                 <div className="summaryPage__p summaryPage__p--small">Shots</div>
                 <div className="summaryPage__p summaryPage__p--small">ml</div>
               </div>
-              {participants.map(participant => (
+              {this.props.party.membersShots.map(participant => (
                 <div className="summaryPage__row">
-                  <div className="summaryPage__p">{participant.name}</div>
+                  <div className="summaryPage__p">{participant.user.username}</div>
                   <div className="summaryPage__p summaryPage__p--small">
-                    {participant.numOfShots}
+                    {participant.shots.length}
                   </div>
-                  <div className="summaryPage__p summaryPage__p--small">{participant.numOfml}</div>
+                  <div className="summaryPage__p summaryPage__p--small">{(() => {
+                    let numOfMl = 0
+                    participant.shots.forEach(shot => numOfMl += shot.size);
+                    return numOfMl
+                  })()}</div>
                 </div>
-              ))}
+              )
+              )}
             </div>
           </section>
 
@@ -111,35 +116,35 @@ class SummaryPage extends React.Component {
               </section>
             )}
           {isHost &&
-          !this.props.user.parties[
-            this.props.user.parties.findIndex(party => party._id === this.props.user.currentPartyId)
-          ].isPartyOver ? (
-            <button
-              className="summaryPage__btn"
-              onClick={() => {
-                this.props.finishParty(
-                  this.props.user.currentPartyId,
-                  this.props.history,
-                  this.props.user.parties
-                );
-              }}
-            >
-              Finish party
-            </button>
-          ) : (
-            <button
-              className="summaryPage__btn"
-              onClick={() => {
-                this.props.leaveParty(
-                  this.props.user.currentPartyId,
-                  this.props.history,
-                  this.props.user.parties
-                );
-              }}
-            >
-              Leave party
-            </button>
-          )}
+            !this.props.user.parties[
+              this.props.user.parties.findIndex(party => party._id === this.props.user.currentPartyId)
+            ].isPartyOver ? (
+              <button
+                className="summaryPage__btn"
+                onClick={() => {
+                  this.props.finishParty(
+                    this.props.user.currentPartyId,
+                    this.props.history,
+                    this.props.user.parties
+                  );
+                }}
+              >
+                Finish party
+              </button>
+            ) : (
+              <button
+                className="summaryPage__btn"
+                onClick={() => {
+                  this.props.leaveParty(
+                    this.props.user.currentPartyId,
+                    this.props.history,
+                    this.props.user.parties
+                  );
+                }}
+              >
+                Leave party
+              </button>
+            )}
         </div>
       </>
     );
