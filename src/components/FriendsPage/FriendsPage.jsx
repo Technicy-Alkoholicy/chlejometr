@@ -59,21 +59,21 @@ class FriendsPage extends React.Component {
 
             {this.props.user.friends
               ? this.props.user.friends.map(friend => (
-                  <div className="friendsPage__friend">
-                    <button
-                      className="friendsPage__btn"
-                      // onClick={() => {
-                      //   this.delParty(party.id);
-                      // }}
-                    >
-                      <i className="fas fa-times friendsPage__icon"></i>
-                    </button>
-                    <p className="friendsPage__p">{friend.username}</p>
-                    <button className="friendsPage__btn">
-                      <i className="fas fa-arrow-right friendsPage__icon"></i>
-                    </button>
-                  </div>
-                ))
+                <div className="friendsPage__friend">
+                  <button
+                    className="friendsPage__btn"
+                  // onClick={() => {
+                  //   this.delParty(party.id);
+                  // }}
+                  >
+                    <i className="fas fa-times friendsPage__icon"></i>
+                  </button>
+                  <p className="friendsPage__p">{friend.username}</p>
+                  <button className="friendsPage__btn">
+                    <i className="fas fa-arrow-right friendsPage__icon"></i>
+                  </button>
+                </div>
+              ))
               : ''}
 
             <button className="friendsPage__btn friendsPage__addBtn">
@@ -86,21 +86,23 @@ class FriendsPage extends React.Component {
 
             {this.props.user.friendInvitations
               ? this.props.user.friendInvitations.map(friend => (
-                  <div className="friendsPage__friend">
-                    <button
-                      className="friendsPage__btn"
-                      // onClick={() => {
-                      //   this.delParty(party.id);
-                      // }}
-                    >
-                      <i className="fas fa-times friendsPage__icon"></i>
-                    </button>
-                    <p className="friendsPage__p">{friend.username}</p>
-                    <button className="friendsPage__btn">
-                      <i className="fas fa-check friendsPage__icon"></i>
-                    </button>
-                  </div>
-                ))
+                <div className="friendsPage__friend">
+                  <button
+                    className="friendsPage__btn"
+                  // onClick={() => {
+                  //   this.delParty(party.id);
+                  // }}
+                  >
+                    <i className="fas fa-times friendsPage__icon"></i>
+                  </button>
+                  <p className="friendsPage__p">{friend.username}</p>
+                  <button className="friendsPage__btn">
+                    <i className="fas fa-check friendsPage__icon" onClick={() => {
+                      this.props.addFriend(friend.username)
+                    }}></i>
+                  </button>
+                </div>
+              ))
               : ''}
           </section>
         </div>
