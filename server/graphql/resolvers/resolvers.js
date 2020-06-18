@@ -61,6 +61,9 @@ export default (req, res, next) => {
       _id: res._id,
       name: res.name,
       owner: await User.findOne({ _id: res.owner }),
+      createdDate: res.createdDate,
+      startedDate: res.startedDate,
+      finishedDate: res.finishedDate,
       isPartyOver: res.isPartyOver,
       members: res.members.map(async id => await User.findOne({ _id: id })),
       membersShots: res.membersShots.map(async memberShots => ({
@@ -205,6 +208,9 @@ export default (req, res, next) => {
         name,
         owner: userId,
         isPartyOver: false,
+        createdDate: new Date,
+        startedDate: new Date,
+        finishedDate: null,
         members: [userId],
         membersShots: [{ userId, shots: [] }]
       };
