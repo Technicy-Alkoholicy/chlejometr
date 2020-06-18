@@ -249,17 +249,21 @@ export default (req, res, next) => {
     },
     leaveParty: async ({ partyId }) => {
       const party = await Party.findOne({ _id: partyId })
-      if (party.members.length === 1) {
-        Party.deleteOne({ _id: partyId })
+      if (party.members.length == 1) {
+        Party.deleteOne({ _id: partyId }, (err) => {
+          if (err) console.log(err);
+          else console.log(`party ${partyId} was deleted`);
+        })
       } else {
-        const memberIndex = party.members.findIndex(member => member === userId)
+        const memberIndex = party.members.findIndex(member => member == userId)
         party.members.splice(memberIndex, 1)
+        await party.save()
       }
 
-      await party.save()
 
       const user = await User.findOne({ _id: userId })
-      const partyIndex = user.parties.findIndex(party => party === partyId)
+      const partyIndex = user.parties.findIndex(party => party == partyId)
+
       user.parties.splice(partyIndex, 1)
       await user.save()
 
@@ -267,12 +271,12 @@ export default (req, res, next) => {
     },
     kickFromParty: async ({ partyId, userId, username }) => {
       const party = await Party.findOne({ _id: partyId })
-      const memberIndex = party.members.findIndex(member => member === userId)
+      const memberIndex = party.members.findIndex(member => member == userId)
       party.members.splice(memberIndex, 1)
       party.save()
 
       const user = userId ? await User.findOne({ _id: userId }) : await User.findOne({ username })
-      const partyIndex = user.parties.findIndex(party => party === partyId)
+      const partyIndex = user.parties.findIndex(party => party == partyId)
       user.parties.splice(partyIndex, 1)
       user.save()
 
