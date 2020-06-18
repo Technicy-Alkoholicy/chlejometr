@@ -89,7 +89,11 @@ export const party = dispatch => (
         [...member.shots[member.shots.length - 1].date].splice(14, 2).join('') * 1;
 
       let time = 0;
-      if (hourOfFirstShot === hourOfLastShot && minOfFirstShot === minOfLastShot) {
+      if (
+        hourOfFirstShot === hourOfLastShot &&
+        minOfFirstShot === minOfLastShot &&
+        dateOfFirstShot === dateOfLastShot
+      ) {
         time = 1;
       } else if (dateOfFirstShot === dateOfLastShot) {
         const hours = hourOfLastShot - hourOfFirstShot;
