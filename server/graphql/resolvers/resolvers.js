@@ -41,8 +41,8 @@ export default (req, res, next) => {
     if (!isLoggined) return null
 
     const user = await User.findOne({ _id: userId })
-    return user.parties.map(partyId => {
-      return Party.findOne({ _id: partyId }).then(async res => ({
+    return user.parties.map(async partyId => {
+      return await Party.findOne({ _id: partyId }).then(async res => ({
         _id: res._id,
         name: res.name,
         owner: await User.findOne({ _id: res.owner }),
