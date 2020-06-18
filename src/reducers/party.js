@@ -78,48 +78,64 @@ export const party = dispatch => (
           state.membersShots.findIndex(member => member.user.username === username)
         ];
 
-      const dateOfFirstShot = [...member.shots[0].date].splice(0, 10).join('') * 1;
-      const dateOfLastShot =
-        [...member.shots[member.shots.length - 1].date].splice(0, 10).join('') * 1;
-      const hourOfFirstShot = [...member.shots[0].date].splice(11, 2).join('') * 1;
-      const hourOfLastShot =
-        [...member.shots[member.shots.length - 1].date].splice(11, 2).join('') * 1;
-      const minOfFirstShot = [...member.shots[0].date].splice(14, 2).join('') * 1;
-      const minOfLastShot =
-        [...member.shots[member.shots.length - 1].date].splice(14, 2).join('') * 1;
-
-      let time = 0;
-      if (
-        hourOfFirstShot === hourOfLastShot &&
-        minOfFirstShot === minOfLastShot &&
-        dateOfFirstShot === dateOfLastShot
-      ) {
-        time = 1;
-      } else if (dateOfFirstShot === dateOfLastShot) {
-        const hours = hourOfLastShot - hourOfFirstShot;
-        const min = minOfLastShot - minOfFirstShot;
-        time = Math.round((hours + min / 60) * 10) / 10;
-      } else {
-        const hours = 24 - hourOfFirstShot + hourOfLastShot;
-        const min = minOfLastShot - minOfFirstShot;
-        time = Math.round((hours + min / 60) * 10) / 10;
-      }
-
-      if (time < 1) time = 1;
-
-      const etanol = (alcoholDrunk * (789 / 1000)) / 10;
-
+      let i = 0;
       let alcoholInBood = 0;
-      if (gender === 'male')
-        alcoholInBood =
-          Math.round(((0.806 * etanol * 1.2) / (0.58 * weight) - 0.015 * time) * 10 * 100) / 100;
-      else if (gender === 'female')
-        alcoholInBood =
-          Math.round(((0.806 * etanol * 1.2) / (0.49 * weight) - 0.017 * time) * 10 * 100) / 100;
-      state.alcoholInBood = alcoholInBood;
+      let breakWhile = false;
+      while (alcoholInBood <= 0 && !breakWhile) {
+        if (i < member.shots.length - 1) {
+          const dateOfFirstShot = [...member.shots[i].date].splice(0, 10).join('');
+          const dateOfLastShot = [...member.shots[member.shots.length - 1].date]
+            .splice(0, 10)
+            .join('');
+          const hourOfFirstShot = [...member.shots[i].date].splice(11, 2).join('') * 1;
+          const hourOfLastShot =
+            [...member.shots[member.shots.length - 1].date].splice(11, 2).join('') * 1;
+          const minOfFirstShot = [...member.shots[i].date].splice(14, 2).join('') * 1;
+          const minOfLastShot =
+            [...member.shots[member.shots.length - 1].date].splice(14, 2).join('') * 1;
 
-      //counting time to sober
-      state.timeToSober = 1 + Math.round(((alcoholInBood * (40 / 0.1)) / 60) * 10) / 10;
+          let time = 0;
+          if (
+            hourOfFirstShot === hourOfLastShot &&
+            minOfFirstShot === minOfLastShot &&
+            dateOfFirstShot === dateOfLastShot
+          ) {
+            time = 2.5;
+          } else if (dateOfFirstShot === dateOfLastShot) {
+            const hours = hourOfLastShot - hourOfFirstShot;
+            const min = minOfLastShot - minOfFirstShot;
+            time = Math.round((hours + min / 60) * 10) / 10;
+          } else {
+            const hours = 24 - hourOfFirstShot + hourOfLastShot;
+            const min = minOfLastShot - minOfFirstShot;
+            time = Math.round((hours + min / 60) * 10) / 10;
+          }
+          if (time < 2.5) {
+            time = 2.5;
+          }
+
+          const etanol = (alcoholDrunk * (789 / 1000)) / 10;
+
+          if (gender === 'male')
+            alcoholInBood =
+              Math.round(((0.806 * etanol * 1.2) / (0.58 * weight) - 0.015 * time) * 10 * 100) /
+              100;
+          else if (gender === 'female')
+            alcoholInBood =
+              Math.round(((0.806 * etanol * 1.2) / (0.49 * weight) - 0.017 * time) * 10 * 100) /
+              100;
+          state.alcoholInBood = alcoholInBood;
+
+          //counting time to sober
+          state.timeToSober =
+            1.5 + Math.round(((alcoholInBood * (40 / 0.1)) / 60) * 10) / 10 - time;
+          i++;
+        } else {
+          breakWhile = true;
+          state.alcoholInBood = 0;
+          state.timeToSober = 0;
+        }
+      }
 
       return { ...state };
     }
