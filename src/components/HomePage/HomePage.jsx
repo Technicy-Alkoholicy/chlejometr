@@ -3,7 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getInfoAboutParties, createParty, setPartyId, checkIsUserLogged } from '../../actions';
+import {
+  getInfoAboutParties,
+  createParty,
+  setPartyId,
+  checkIsUserLogged,
+  getUserInfo
+} from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -21,6 +27,7 @@ class HomePage extends React.Component {
   componentDidMount = () => {
     this.props.checkIsUserLogged(this.props.history);
     this.props.getInfoAboutParties();
+    this.props.getUserInfo();
   };
 
   componentDidUpdate = () => {
@@ -144,9 +151,15 @@ class HomePage extends React.Component {
                     <i className="fas fa-times homePage__icon"></i>
                   </button>
                   <p className="homePage__p">{party.name}</p>
-                  <button className="homePage__btn">
+                  <Link
+                    to="/main"
+                    className="homePage__btn"
+                    onClick={() => {
+                      this.props.setPartyId(party._id);
+                    }}
+                  >
                     <i className="fas fa-arrow-right homePage__icon"></i>
-                  </button>
+                  </Link>
                 </div>
               ))
             ) : (
@@ -162,6 +175,12 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = { getInfoAboutParties, createParty, setPartyId, checkIsUserLogged };
+const mapDispatchToProps = {
+  getInfoAboutParties,
+  createParty,
+  setPartyId,
+  checkIsUserLogged,
+  getUserInfo
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

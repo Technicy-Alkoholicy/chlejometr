@@ -21,6 +21,11 @@ class MainPage extends React.Component {
 
   componentDidMount() {
     this.props.checkIsUserLogged(this.props.history);
+    console.log(
+      this.props.user.parties[
+        this.props.user.parties.findIndex(party => party._id === this.props.user.currentPartyId)
+      ]
+    );
   }
 
   componentDidUpdate() {
@@ -167,7 +172,14 @@ class MainPage extends React.Component {
           <button
             className="mainPage__mainBtn"
             onClick={() => {
-              this.nextShot();
+              if (
+                !this.props.user.parties[
+                  this.props.user.parties.findIndex(
+                    party => party._id === this.props.user.currentPartyId
+                  )
+                ].isPartyOver
+              )
+                this.nextShot();
             }}
           ></button>
 

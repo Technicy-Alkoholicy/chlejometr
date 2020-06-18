@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { checkIsUserLogged, finishParty } from '../../actions';
+import { checkIsUserLogged, finishParty, leaveParty } from '../../actions';
 
 import Nav from '../common/Nav/Nav.jsx';
 
@@ -24,6 +24,11 @@ class SummaryPage extends React.Component {
 
   componentDidMount = () => {
     this.props.checkIsUserLogged(this.props.history);
+    console.log(
+      this.props.user.parties[
+        this.props.user.parties.findIndex(party => party._id === this.props.user.currentPartyId)
+      ]
+    );
   };
 
   render() {
@@ -76,23 +81,31 @@ class SummaryPage extends React.Component {
             </div>
           </section>
 
-          {isHost && (
-            <section className="summaryPage__section">
-              <h2 className="summaryPage__h2">Participants</h2>
-              {participants.map((participant, index) => (
-                <div className="summaryPage__participant">
-                  <p className="summaryPage__participantP">{participant.name}</p>
-                  <button className="summaryPage__participantBtn">
-                    <i className="fas fa-times summaryPage__participantIcon"></i>
-                  </button>
-                </div>
-              ))}
-              <button className="summaryPage__participantBtn">
-                <i className="fas fa-plus homePage__icon"></i>
-              </button>
-            </section>
-          )}
-          {isHost ? (
+          {isHost &&
+            !this.props.user.parties[
+              this.props.user.parties.findIndex(
+                party => party._id === this.props.user.currentPartyId
+              )
+            ].isPartyOver && (
+              <section className="summaryPage__section">
+                <h2 className="summaryPage__h2">Participants</h2>
+                {participants.map((participant, index) => (
+                  <div className="summaryPage__participant">
+                    <p className="summaryPage__participantP">{participant.name}</p>
+                    <button className="summaryPage__participantBtn">
+                      <i className="fas fa-times summaryPage__participantIcon"></i>
+                    </button>
+                  </div>
+                ))}
+                <button className="summaryPage__participantBtn">
+                  <i className="fas fa-plus homePage__icon"></i>
+                </button>
+              </section>
+            )}
+          {isHost &&
+          !this.props.user.parties[
+            this.props.user.parties.findIndex(party => party._id === this.props.user.currentPartyId)
+          ].isPartyOver ? (
             <button
               className="summaryPage__btn"
               onClick={() => {
@@ -106,7 +119,18 @@ class SummaryPage extends React.Component {
               Finish party
             </button>
           ) : (
-            <button className="summaryPage__btn">Leave party</button>
+            <button
+              className="summaryPage__btn"
+              onClick={() => {
+                this.props.leaveParty(
+                  this.props.user.currentPartyId,
+                  this.props.history,
+                  this.props.user.parties
+                );
+              }}
+            >
+              Leave party
+            </button>
           )}
         </div>
       </>
@@ -114,7 +138,7 @@ class SummaryPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = { checkIsUserLogged, finishParty };
+const mapStateToProps = ({ user, party }) => ({ user, party });
+const mapDispatchToProps = { checkIsUserLogged, finishParty, leaveParty };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SummaryPage);
