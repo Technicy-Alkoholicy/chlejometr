@@ -74,8 +74,8 @@ class MainPage extends React.Component {
         state.milliliters.value,
         state.percent.value,
         this.props.user.username,
-        70,
-        'male'
+        this.props.user.weight,
+        this.props.user.gender
       );
 
       this.setState(state);
@@ -106,8 +106,8 @@ class MainPage extends React.Component {
                       }}
                     />
                   ) : (
-                    <p className="mainPage__input">{percent.value}</p>
-                  )}
+                      <p className="mainPage__input">{percent.value}</p>
+                    )}
                   <p className="mainPage__unitP">%</p>
 
                   <button
@@ -120,13 +120,13 @@ class MainPage extends React.Component {
                     <i
                       className={`fas fa-pen mainPage__icon ${
                         !percent.isActive ? 'mainPage__icon--active' : ''
-                      }`}
+                        }`}
                     ></i>
                     {/* icon submit */}
                     <i
                       className={`fas fa-check mainPage__icon ${
                         percent.isActive ? 'mainPage__icon--active' : ''
-                      }`}
+                        }`}
                     ></i>
                   </button>
                 </div>
@@ -145,8 +145,8 @@ class MainPage extends React.Component {
                       }}
                     />
                   ) : (
-                    <p className="mainPage__input">{milliliters.value}</p>
-                  )}
+                      <p className="mainPage__input">{milliliters.value}</p>
+                    )}
                   <p className="mainPage__unitP">ml</p>
 
                   <button
@@ -159,13 +159,13 @@ class MainPage extends React.Component {
                     <i
                       className={`fas fa-pen mainPage__icon ${
                         !milliliters.isActive ? 'mainPage__icon--active' : ''
-                      }`}
+                        }`}
                     ></i>
                     {/* icon submit */}
                     <i
                       className={`fas fa-check mainPage__icon ${
                         milliliters.isActive ? 'mainPage__icon--active' : ''
-                      }`}
+                        }`}
                     ></i>
                   </button>
                 </div>
@@ -205,10 +205,10 @@ class MainPage extends React.Component {
                     )
                   ].shots.length
                     ? this.props.party.membersShots[
-                        this.props.party.membersShots.findIndex(
-                          member => member.user.username === this.props.user.username
-                        )
-                      ].shots.length
+                      this.props.party.membersShots.findIndex(
+                        member => member.user.username === this.props.user.username
+                      )
+                    ].shots.length
                     : 0}
                 </p>
               </div>

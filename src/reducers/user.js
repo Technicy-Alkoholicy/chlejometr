@@ -94,21 +94,28 @@ export const user = dispatch => (
     }
 
     case 'CHANGE_USER_DATA': {
-      if (optionToChange === 'age' || optionToChange === 'height' || optionToChange === 'weight') {
-        fetch({
-          query: `mutation {
-            uppdateUserData(${optionToChange}:${value})
+      // if (optionToChange === 'age' || optionToChange === 'height' || optionToChange === 'weight') {
+      console.log(`mutation {
+            updateUserData(${optionToChange}:${value})
+          }
+          `);
+
+      fetch({
+        query: `mutation {
+            updateUserData(${optionToChange}:${value})
           }
           `
-        });
-      } else {
-        fetch({
-          query: `mutation {
-          uppdateUserData(${optionToChange}:"${value}")
-        }
-        `
-        });
-      }
+      }).then(res => {
+        dispatch(updateUserData({ [optionToChange]: value }))
+      })
+      // } else {
+      //   fetch({
+      //     query: `mutation {
+      //     uppdateUserData(${optionToChange}:"${value}")
+      //   }
+      //   `
+      //   });
+      // }
     }
 
     case 'GET_USER_INFO': {

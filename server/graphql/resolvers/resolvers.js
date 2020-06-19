@@ -137,6 +137,7 @@ export default (req, res, next) => {
       return User.find()
         .then(user => user)
     },
+
     user: userResolver,
     updateUserData: async ({ passwordToChange, password, email, username, weight, gender, height, age, isPrivate }) => {
       let user = await User.findOne({ _id: userId })
